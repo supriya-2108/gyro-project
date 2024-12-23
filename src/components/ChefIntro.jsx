@@ -24,34 +24,34 @@ export default function ChefIntro() {
             <div className="overflow-hidden rounded-lg h-full">
               <img
                 alt="Chef preparing a dish"
-                className=" h-[30rem] w-[45rem] object-cover"
+                className=" md:h-[30rem] md:w-[45rem] object-cover"
                 src="/about.png"
               />
             </div>
             <div className=" overflow-hidden rounded-lg mt-10 -ml-5">
               <img
                 alt="Cooking preparation with fresh ingredients"
-                className=" h-[30rem] w-[45rem] object-cover"
+                className=" md:h-[30rem] md:w-[45rem] object-cover"
                 src="/about1.png"
               />
             </div>
           </div>
-          <div className="flex flex-col w-[80%] mt-10 space-y-6">
+          <div className="flex flex-col max-sm:w-[100%] w-[80%] -mt-10  md:mt-10 space-y-2 md:space-y-6">
             <div className="">
-              <h1 className=" text-[#009dc4] font-greatVibes text-8xl mt-2">
+              <h1 className=" text-[#009dc4] font-greatVibes text-4xl md:text-8xl mt-2">
                 About
               </h1>
-              <p className="font-bold text-[#3d3b3a] text-4xl -mt-10">
+              <p className="font-bold text-[#3d3b3a] text-xl md:text-4xl -mt-7 md:-mt-10">
                 Gyro Restaurant
               </p>
             </div>
-            <p className="text-[#3d3b3a] leading-relaxed text-lg font-normal tracking-wide">
+            <p className="text-[#3d3b3a] md:leading-relaxed text-md md:text-lg  font-normal md:tracking-wide">
               Gyro Gyro llc. A family owned and operated greek cuisine
               restaurant Has served the fenton region for over 10+ years nestled
               in the heart of Gravois bluffs
             </p>
             <div className="space-y-4 pt-4">
-              <div className="flex items-center gap-2 text-gray-600">
+              <div className="flex max-sm:flex-col md:items-center md:gap-2 text-gray-600">
                 {/* <Clock className="h-5 w-5 text-[#009dc4]" /> */}
                 <span>Mon - Sat</span>
                 <span className="font-semibold">11 AM - 8 PM</span>
@@ -60,7 +60,7 @@ export default function ChefIntro() {
                 {/* <Phone className="h-5 w-5 text-[#009dc4]" /> */}
                 <a
                   href="tel:16366001333"
-                  className="text-4xl font-bold text-[#3d3b3a] transition-colors"
+                  className="md:text-4xl font-bold text-[#3d3b3a] transition-colors"
                 >
                   16366001333
                 </a>

@@ -11,9 +11,9 @@ const OrderOnline = () => {
   return (
     <div>
       <HeroSection height={"16rem"} innerHeight="100vh" innerImages={true} />
-      <div className="absolute top-1/2 left-1/2 align-middle justify-center flex flex-col gap-5 text-xl text-white">
+      <div className="absolute top-[14rem] md:top-1/2 left-1/2 align-middle justify-center flex flex-col gap-5 md:text-xl text-white">
         <button
-          className="bg-[#c8a97e] w-[6rem] py-2 rounded-md -ml-7"
+          className="bg-[#c8a97e] md:w-[6rem] py-1 md:py-2 rounded-md -ml-7"
           onClick={() => {
             navigate("/menu");
             localStorage.setItem("mode", "pickup");
@@ -22,7 +22,7 @@ const OrderOnline = () => {
           Pickup
         </button>
         <button
-          className="bg-[#c8a97e] px-10 py-2 rounded-md -ml-14"
+          className="bg-[#c8a97e] md:px-10 px-5 py-1 md:py-2 rounded-md -ml-10 md:-ml-14"
           onClick={() => {
             navigate("/menu");
             localStorage.setItem("mode", "dinein");

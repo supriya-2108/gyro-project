@@ -144,7 +144,7 @@ export default function AdminDashboard() {
   }, [selectedDate]);
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 overflow-x-hidden">
       {/* Sidebar */}
       {localStorage.getItem("admintoken") ? (
         <>
@@ -220,14 +220,14 @@ export default function AdminDashboard() {
                     value={`$${stats.totalValue.toFixed(2)}`}
                   />
                 </div>
-                <div className="mb-6 flex gap-4">
+                <div className="mb-6 flex max-sm:grid max-sm:grid-cols-2 max-sm:space-x-2 gap-4">
                   <input
                     type="text"
                     name="searchTerm"
                     value={filters.searchTerm}
                     onChange={handleFilterChange}
-                    placeholder="Search by order ID or product"
-                    className="w-64 border-gray-300 rounded-md shadow-sm p-2"
+                    placeholder="Search"
+                    className="md:w-64 border-gray-300 rounded-md shadow-sm p-2"
                   />
                   <select
                     name="status"
@@ -254,43 +254,46 @@ export default function AdminDashboard() {
                 <h3 className="text-2xl font-semibold text-gray-900 mb-4">
                   OrderList for {selectedDate}
                 </h3>
-                <table className="w-full bg-white rounded-lg shadow-md overflow-hidden">
-                  <thead>
-                    <tr className="bg-gray-200 text-gray-700 text-left">
-                      <th className="px-4 py-2">Order ID</th>
-                      <th className="px-4 py-2">Product</th>
-                      <th className="px-4 py-2">Quantity</th>
-                      <th className="px-4 py-2">Total</th>
-                      <th className="px-4 py-2">Status</th>
-                      <th className="px-4 py-2">Order Type</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredOrders.length > 0 ? (
-                      filteredOrders.map((order) => (
-                        <tr key={order.id} className="border-t">
-                          <td className="px-4 py-2">{order.id}</td>
-                          <td className="px-4 py-2">{order.product}</td>
-                          <td className="px-4 py-2">{order.quantity}</td>
-                          <td className="px-4 py-2">
-                            ${order.total.toFixed(2)}
-                          </td>
-                          <td className="px-4 py-2">{order.status}</td>
-                          <td className="px-4 py-2">{order.orderType}</td>
-                        </tr>
-                      ))
-                    ) : (
-                      <tr>
-                        <td
-                          colSpan="6"
-                          className="px-4 py-2 text-center text-gray-500"
-                        >
-                          No orders found for this date.
-                        </td>
+                <div className="max-sm:overflow-x-scroll">
+                  <table className="min-w-full bg-white rounded-lg shadow-md">
+                    {" "}
+                    <thead>
+                      <tr className="bg-gray-200 text-gray-700 text-left">
+                        <th className="px-4 py-2">Order ID</th>
+                        <th className="px-4 py-2">Product</th>
+                        <th className="px-4 py-2">Quantity</th>
+                        <th className="px-4 py-2">Total</th>
+                        <th className="px-4 py-2">Status</th>
+                        <th className="px-4 py-2">Order Type</th>
                       </tr>
-                    )}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {filteredOrders.length > 0 ? (
+                        filteredOrders.map((order) => (
+                          <tr key={order.id} className="border-t">
+                            <td className="px-4 py-2">{order.id}</td>
+                            <td className="px-4 py-2">{order.product}</td>
+                            <td className="px-4 py-2">{order.quantity}</td>
+                            <td className="px-4 py-2">
+                              ${order.total.toFixed(2)}
+                            </td>
+                            <td className="px-4 py-2">{order.status}</td>
+                            <td className="px-4 py-2">{order.orderType}</td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td
+                            colSpan="6"
+                            className="px-4 py-2 text-center text-gray-500"
+                          >
+                            No orders found for this date.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </main>
           </div>

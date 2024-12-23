@@ -13,7 +13,6 @@ const Menu = () => {
         heading={"Our  Specialties"}
         innerHeight="60vh"
       />
-      {/* <MenuHeader /> */}
       <OurMenu type="menu" />
       <Footer />
     </div>

@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 import { Images } from "../constants/Images";
 const Home = () => {
   return (
-    <div className="w-full">
+    <div className="w-full overflow-x-hidden">
       <HeroSection Images={Images} height={"100vh"} innerHeight="100vh" />{" "}
       <ChefIntro />
       <OurMenu />

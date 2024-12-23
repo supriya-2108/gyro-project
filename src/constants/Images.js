@@ -7,7 +7,7 @@ export const Images = [
   {
     src: "https://alkareemholding.com/wp-content/uploads/2022/10/Falafal-Platter.jpg",
     alt: "Assorted sushi platter",
-    heading: "Authentic Mediterranean Delights, Made Fresh Daily",
+    heading: "Authentic Mediterranean Delights, Made Fresh",
   },
   {
     src: "https://theplanetd.com/images/mediterranean-food-black-eyed-pea-salad.jpg",

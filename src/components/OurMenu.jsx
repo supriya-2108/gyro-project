@@ -24,7 +24,15 @@ export default function OurMenu({ type }) {
     price: 0,
     specialNote: "",
     addOns: 0,
+    quantity: 1, // Add a default quantity here
   });
+
+  const handleQuantityChange = (e) => {
+    setFoodItem((prev) => ({
+      ...prev,
+      quantity: parseInt(e.target.value), // Update quantity as a number
+    }));
+  };
 
   const getFoodList = async () => {
     let res = await getProductListForUser();
@@ -75,11 +83,11 @@ export default function OurMenu({ type }) {
   };
   const handleSubmit = async () => {
     let userData = JSON.parse(localStorage.getItem("token"));
-    let u_id = userData?.data?.user?._id;
+    let u_id = userData;
     let data = {
       product_id: foodItem.Product,
       user_id: u_id,
-      quantity: 2,
+      quantity: 1,
     };
     console.log(data, foodItem);
 
@@ -95,7 +103,7 @@ export default function OurMenu({ type }) {
 
   return (
     <div
-      className="container mx-auto bg-[#f9f9f9] px-4 py-12 bg-opacity-10"
+      className="container w-full !overflow-hidden mx-auto bg-[#f9f9f9] px-4 py-12 bg-opacity-10"
       style={{
         backgroundImage:
           "url('https://img.freepik.com/premium-photo/food-cooking-background-stone-texture-with-sea-salt-pepper-garlic-parsley-light-grey-abstract-food-background-empty-space-text-can-be-used-food-posters-design-menu-top-view_253362-16400.jpg?w=2000')",
@@ -112,18 +120,20 @@ export default function OurMenu({ type }) {
       )}
       {!type && (
         <div className="text-center mt-8">
-          <h1 className="text-8xl text-[#009dc4] mb-2 font-greatVibes">
+          <h1 className="text-5xl md:text-8xl text-[#009dc4] mb-2 font-greatVibes">
             Specialties
           </h1>
-          <h1 className="text-5xl font-bold text-[#3d3b3a] -mt-12">Our Menu</h1>
+          <h1 className=" text-3xl md:text-5xl font-bold text-[#3d3b3a] -mt-9 md:-mt-12">
+            Our Menu
+          </h1>
         </div>
       )}
-      <div className="flex gap-6 justify-center w-full my-7">
+      <div className="max-sm:grid max-sm:grid-cols-4 max-sm:my-6 md:flex gap-y-2 gap-x-3 md:gap-6 justify-center w-full md:my-7">
         {categories?.map((category, index) => (
           <button
             key={index}
             onClick={() => handleCategoryChange(category)}
-            className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-colors ${
+            className={`flex items-center gap-2 py-1 px-3 md:px-6 md:py-3 rounded-lg transition-colors ${
               activeTab === category
                 ? "bg-[#3d3b3a] text-white"
                 : "bg-gray-100 hover:bg-gray-200"
@@ -139,12 +149,12 @@ export default function OurMenu({ type }) {
           </button>
         ))}
       </div>
-      <div className="grid lg:grid-cols-2 w-[85%] mx-auto gap-y-4">
+      <div className="grid lg:grid-cols-2 md:w-[85%] mx-auto gap-y-4">
         {foodItems.length > 0 &&
           foodItems?.map((item, index) => (
             <div
               key={index}
-              className={`flex cursor-pointer items-center bg-white w-[100%] h-[15rem] shadow-xl ${
+              className={`flex max-sm:flex-col cursor-pointer rounded-md items-center bg-white w-[100%] h-[22rem] md:h-[15rem] shadow-xl ${
                 activeTitle.includes(item.name)
                   ? "border border-[#3d3b3a] !shadow-2xl bg-[#c8a97e]"
                   : ""
@@ -164,14 +174,14 @@ export default function OurMenu({ type }) {
               <img
                 src={item.image}
                 alt={item.name}
-                className="w-[35%] h-full object-cover"
+                className="w-[100%] md:w-[35%] h-[10rem] md:h-full object-cover"
               />
               <div className="flex px-6 gap-5 py-3">
                 <div className="flex flex-col gap-2 justify-between items-start ">
-                  <h3 className="font-bold text-xl text-gray-800">
+                  <h3 className="font-bold text-lg md:text-xl text-gray-800">
                     {item.name}
                   </h3>{" "}
-                  <p className="text-muted-foreground text-md mt-1">
+                  <p className="text-muted-foreground text-[0.7rem] md:text-md mt-1">
                     {item?.description}
                   </p>
                   <button
@@ -195,7 +205,7 @@ export default function OurMenu({ type }) {
         onClose={closeModal}
         title={foodItem.title}
       >
-        <div className="h-[20rem] w-full bg-red-300">
+        <div className="h-[10rem] md:h-[20rem] w-full bg-red-300">
           {" "}
           <img
             src={foodItem.image}
@@ -213,10 +223,10 @@ export default function OurMenu({ type }) {
           <span className="sr-only">Close</span>
         </button>
         <div className="mx-5">
-          <h1 className="font-semibold text-gray-800 text-xl my-4">
+          <h1 className="font-semibold text-gray-800 text-xl capitalize my-2 md:my-4">
             {foodItem.title}
           </h1>
-          <div className="text-gray-700 !bg-red-400 text-lg max-h-[3rem] overflow-y-scroll">
+          <div className="text-gray-700 md:text-lg max-h-[5rem] md:max-h-[3rem] overflow-y-scroll">
             {foodItem.description}
           </div>
           <p className="my-3">Price: ${foodItem.price}</p>
@@ -225,12 +235,14 @@ export default function OurMenu({ type }) {
             <select
               name=""
               id=""
+              value={foodItem.quantity} // Bind value to state
+              onChange={handleQuantityChange}
               className="bg-gray-400 h-8 text-white rounded-md px-1 w-10"
             >
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
             </select>
           </p>
           <div

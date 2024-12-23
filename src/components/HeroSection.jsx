@@ -14,7 +14,9 @@ export default function HeroSection({
   return (
     <>
       <Header />
-      <div className={`relative h-[100vh] !w-[100vw] !overflow-hidden`}>
+      <div
+        className={`relative h-[40vh] sm:h-[100vh] sm:!w-[100vw] !overflow-hidden`}
+      >
         <Carousel
           currentIndex={currentIndex}
           setCurrentIndex={setCurrentIndex}
@@ -22,21 +24,21 @@ export default function HeroSection({
         />
         <div className="absolute top-0 bg-black opacity-60 h-full !w-full"></div>
         {heading && (
-          <p className="absolute top-[20rem] left-[38rem] !text-xl text-[#009dc4]">
+          <p className="absolute top-[20rem] left-[38rem] text-xl md:text-3xl text-[#009dc4]">
             {heading}
           </p>
         )}
-        <div className="absolute top-[12rem] w-[60%] left-1/2 transform -translate-x-1/2 text-center z-50">
+        <div className="absolute max-md:top-8   left-1/2 sm:top-[12rem] max-md:w-[80%] w-[60%] sm:left-1/2 transform -translate-x-1/2 text-center z-50">
           {Images && (
             <h1
               key="hero-heading"
-              className="font-mono lg:text-4xl xl:text-6xl  font-semibold  text-[#009dc4]"
+              className="font-mono text-2xl mb-2 md:text-4xl xl:text-5xl  font-semibold  text-[#009dc4]"
             >
               {Images[currentIndex]?.heading}
             </h1>
           )}
           {Images && (
-            <div className="flex z-50 gap-3 mt-[2rem] w-full mx-auto justify-center">
+            <div className="flex z-50 gap-3 sm:mt-[2rem] w-full mx-auto justify-center">
               {Images?.map((_, index) => (
                 <div
                   key={index}
@@ -50,21 +52,21 @@ export default function HeroSection({
           )}
         </div>
         {Images && (
-          <div className="absolute w-full top-[25rem] left-0 right-0 h-px bg-[#009dc4]/20" />
+          <div className="absolute w-full max-sm:top-[35rem] sm:top-[25rem] left-0 right-0 h-px bg-[#009dc4]/20" />
         )}
         {!innerImages
           ? InnerImages && (
-              <div className="flex justify-evenly w-full absolute bottom-[8rem] px-10">
+              <div className="flex justify-evenly w-full absolute bottom-4 sm:bottom-[8rem] px-10">
                 {InnerImages?.map((item) => (
                   <div className="justify-center items-center flex flex-col text-white">
                     <img
                       src={item.src}
-                      className="w-[5rem] lg:w-[7rem] object-cover h-[5rem] lg:h-[7rem] rounded-full"
+                      className="h-12 w-12 sm:w-[5rem] lg:w-[7rem] object-cover sm:h-[5rem] lg:h-[7rem] rounded-full"
                     />
-                    <p className="text-md lg:text-xl font-medium">
+                    <p className="text-[0.7rem] sm:text-xl lg:text-xl font-medium">
                       {item.title}
                     </p>
-                    <p className="max-md:hidden w-[70%] lg:text-lg text-center">
+                    <p className="max-md:hidden w-[70%] sm:text-[0.7rem] lg:text-sm text-center">
                       {item.ingredients}
                     </p>
                   </div>

@@ -2,9 +2,9 @@ import { Facebook, Twitter, Instagram, Send } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-zinc-900 text-zinc-400 py-16">
+    <footer className="bg-zinc-900 text-zinc-400 py-4 md:py-16">
       <div className="container w-[80%] mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7 md:gap-12">
           {/* Tasty Section */}
           <div>
             <h2 className="text-white text-2xl font-medium mb-4">Tasty</h2>
@@ -30,7 +30,7 @@ export default function Footer() {
 
           {/* Opening Hours Section */}
           <div>
-            <h2 className="text-white text-2xl font-medium mb-4">
+            <h2 className="text-white md:text-2xl font-medium mb-4">
               Opening Hours
             </h2>
             <div className="space-y-2">
@@ -44,8 +44,8 @@ export default function Footer() {
                 "Sunday",
               ].map((day) => (
                 <div key={day} className="flex gap-2">
-                  <span>{day}:</span>
-                  <span>11AM - 8PM</span>
+                  <span className="max-sm:text-sm">{day}:</span>
+                  <span className="max-sm:text-sm">11AM - 8PM</span>
                 </div>
               ))}
             </div>
@@ -53,10 +53,10 @@ export default function Footer() {
 
           {/* Contact Information Section */}
           <div>
-            <h2 className="text-white text-2xl font-medium mb-4">
+            <h2 className="text-white md:text-2xl font-medium md:mb-4">
               Contact Information
             </h2>
-            <div className="space-y-2">
+            <div className="max-sm:text-sm md:space-y-2">
               <p>657 Gravois Rd, Fenton, MO 63026</p>
               <p>16366001333</p>
               <p>info@yoursite.com</p>
@@ -64,7 +64,7 @@ export default function Footer() {
           </div>
 
           {/* Newsletter Section */}
-          <div>
+          <div className="max-sm:hidden">
             <h2 className="text-white text-2xl font-medium mb-4">Newsletter</h2>
             <p className="mb-4">
               Far far away, behind the word mountains, far from the countries.

@@ -32,9 +32,9 @@ export default function StatsIntro() {
   }, []); // Runs only once after the component mounts
 
   return (
-    <div className="container mx-auto px-4 py-16">
-      <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16">
+    <div className="container md:mx-auto md:px-4 py-2 md:py-16">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between md:gap-8">
+        <div className="grid grid-cols-1 max-sm:hidden md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-16">
           <div className="text-center">
             <h3 className="text-5xl font-bold text-[#3d3b3a]" id="years">
               18
@@ -68,7 +68,7 @@ export default function StatsIntro() {
             </p>
           </div>
         </div>
-        <div className="w-[20%] text-gray-600">
+        <div className="md:w-[20%] text-gray-600">
           <p className="leading-relaxed">
             A small river named Duden flows by their place and supplies it with
             the necessary regelialia.
