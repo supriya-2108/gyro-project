@@ -4,6 +4,9 @@ const Step2 = ({ formData, handleInputChange, handleSubmit }) => {
   return (
     <div>
       <form className="space-y-6" onSubmit={handleSubmit}>
+        <p className="text-[#85604d] font-medium text-[0.7rem]">
+          OTP has shared to email
+        </p>
         <div>
           <label
             htmlFor="email"

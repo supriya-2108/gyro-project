@@ -67,12 +67,12 @@ const Register = () => {
           </header>
           <div className="bg-gray-100 h-[100vh]">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
-              <h2 className="mt-12 text-center text-3xl font-extrabold text-gray-900">
+              <h2 className="mt-12 text-center text-xl sm:text-3xl font-extrabold text-gray-900">
                 Sign Up to your account
               </h2>
             </div>
 
-            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+            <div className="mt-8 w-[80%] mx-auto sm:w-full sm:max-w-md">
               <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
                 {step === 1 ? (
                   <Step1
