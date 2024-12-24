@@ -75,7 +75,7 @@ export function AddEditProductModal({
       {isEditModalOpen && (
         <div className="modal-overlay" onClick={onClose} aria-hidden="true">
           <div
-            className="bg-white p-6 max-h-[80%] overflow-y-scroll !w-[50%] font-medium"
+            className="bg-white p-6 max-h-[80%] overflow-y-scroll w-[80%] sm:!w-[50%] font-medium"
             onClick={(e) => e.stopPropagation()}
             aria-hidden="true"
           >
@@ -151,6 +151,7 @@ export function AddEditProductModal({
                   type="file"
                   accept="image/*"
                   onChange={handleImageChange}
+                  required
                 />
 
                 {formData.imageUrl && (

@@ -5,7 +5,7 @@ import { useAppContext } from "../Context";
 import { Link, useNavigate } from "react-router-dom";
 import { deleteCartList, getCartList } from "../services/User";
 
-const OrderSummary = () => {
+const MyCart = () => {
   const [foodSummary, setFoodSummary] = useState();
   const [error, setError] = useState(false);
   const [msg, setMsg] = useState(false);
@@ -37,6 +37,8 @@ const OrderSummary = () => {
   useEffect(() => {
     getCartItems();
   }, []);
+  console.log(foodSummary);
+
   return (
     <div className="">
       <Header backgroundColor={"bg-gray-800 relative"} />
@@ -80,10 +82,14 @@ const OrderSummary = () => {
                 </div>
               ))}
             {foodSummary && (
-              <div className="w-[50%] ml-36">
+              <div className="w-[50%] ml-10">
                 <p className="font-semibold mt-4">
                   Total Amount: $
-                  {foodSummary.reduce((acc, red) => acc + (red.price || 0), 0) +
+                  {foodSummary.reduce(
+                    (acc, red) =>
+                      acc + red.product_details[0]?.price * red.quantity,
+                    0
+                  ) +
                     foodSummary.reduce(
                       (acc, red) => acc + (red.addOnPrice || 0),
                       0
@@ -128,4 +134,4 @@ const OrderSummary = () => {
   );
 };
 
-export default OrderSummary;
+export default MyCart;

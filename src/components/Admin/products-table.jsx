@@ -12,7 +12,11 @@ export function ProductsTable({
   const columns = [
     { key: "image", header: "Item Image" },
     { key: "name", header: "Name" },
-    { key: "description", header: "Description" },
+    {
+      key: "description",
+      header: "Description",
+      className: "description-column",
+    },
     {
       key: "price",
       header: "Price",
@@ -81,7 +85,7 @@ export function ProductsTable({
             products.map((product) => (
               <tr key={product.id}>
                 {columns.map((col) => (
-                  <td key={col.key}>
+                  <td key={col.key} className="!w-[20rem]">
                     {col.key === "image" ? (
                       // Render image in the table
                       <img
@@ -128,6 +132,7 @@ export function ProductsTable({
         th {
           background-color: #f9f9f9;
         }
+
         .actions {
           display: flex;
           gap: 0.5rem;

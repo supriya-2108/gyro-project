@@ -6,6 +6,8 @@ import { AddEditProductModal } from "../../components/Admin/add-edit-product-mod
 import { DeleteConfirmationDialog } from "../../components/Admin/delete-confirmation-dialog";
 import { Sidebar } from "../../components/Admin/Sidebar";
 import { StatCard } from "../../components/Admin/Statscard";
+import { useLocation, useNavigate, Link } from "react-router-dom";
+import { AdminItems } from "../../constants/AdminMenu.js";
 import axios from "axios";
 import {
   addProduct,
@@ -24,6 +26,8 @@ export default function AdminProductList() {
     categoriesCount: 0,
     totalValue: 0,
   });
+
+  const location = useLocation();
   const toggleAvailability = (id) => {
     setProducts(
       products.map((product) =>
@@ -32,6 +36,12 @@ export default function AdminProductList() {
           : product
       )
     );
+  };
+
+  const navigate = useNavigate();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
   const totalProducts = products?.length;
   const totalCategories = new Set(products?.map((product) => product.category))
@@ -86,12 +96,31 @@ export default function AdminProductList() {
     if (res?.status == 200) {
       setProducts(res?.data?.products);
     }
+    let admintoken = localStorage.getItem("admintoken");
+    let userData;
+    console.log(admintoken);
+
+    if (admintoken) {
+      try {
+        userData = JSON.parse(admintoken);
+      } catch (error) {
+        console.error("Error parsing admintoken:", error);
+      }
+    }
+
+    if (!admintoken) {
+      navigate("/admin/login");
+    }
   };
   useEffect(() => {
     getProductListforrestaurant();
   }, []);
   console.log(isEditModalOpen);
+  const handleLogout = () => {
+    console.log("ini");
 
+    localStorage.removeItem("admintoken");
+  };
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
@@ -125,8 +154,8 @@ export default function AdminProductList() {
               />
               {localStorage.getItem("admintoken") ? (
                 <button
-                  className="border border-gray-500 p-2 rounded-md text-gray-500"
-                  onClick={undefined}
+                  className="border border-gray-500 p-2 rounded-md text-gray-500 max-sm:hidden"
+                  onClick={handleLogout}
                   type="button"
                 >
                   Logout
@@ -135,6 +164,29 @@ export default function AdminProductList() {
                 ""
               )}
             </div>
+            <button
+              className="block sm:hidden text-black focus:outline-none"
+              onClick={toggleMobileMenu}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d={
+                    isMobileMenuOpen
+                      ? "M6 18L18 6M6 6l12 12"
+                      : "M4 6h16M4 12h16m-16 6h16"
+                  }
+                />
+              </svg>
+            </button>
           </div>
         </header>
 
@@ -193,6 +245,39 @@ export default function AdminProductList() {
         onClose={() => setIsDeleteDialogOpen(false)}
         onConfirm={handleDeleteProduct}
       />
+      {isMobileMenuOpen && (
+        <div className="fixed top-0 left-0 w-full h-screen bg-black bg-opacity-50 flex items-center justify-center z-40">
+          <div className="bg-white rounded-lg w-4/5 p-5">
+            <button
+              className="absolute top-5 right-5 text-black"
+              onClick={toggleMobileMenu}
+            >
+              Close
+            </button>
+            <ul className="space-y-4">
+              {AdminItems.map((item, index) => (
+                <li key={index}>
+                  <Link
+                    to={item.link}
+                    className={`text-sm font-bold uppercase block ${
+                      location.pathname !== "/" ? "text-black" : "text-black"
+                    } hover:text-gray-300 transition-colors ${
+                      item.title === "Order Online"
+                        ? "bg-[#009dc4] p-3 rounded-md text-white"
+                        : ""
+                    }`}
+                    onClick={
+                      item.title === "Logout" ? handleLogout : toggleMobileMenu
+                    }
+                  >
+                    {item.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

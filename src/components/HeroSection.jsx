@@ -10,12 +10,14 @@ export default function HeroSection({
   innerHeight,
   innerImages,
 }) {
+  console.log(heading);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   return (
     <>
       <Header />
       <div
-        className={`relative h-[40vh] sm:h-[100vh] sm:!w-[100vw] !overflow-hidden`}
+        className={`relative h-[35vh] sm:h-[100vh] sm:!w-[100vw] !overflow-hidden`}
       >
         <Carousel
           currentIndex={currentIndex}
@@ -24,7 +26,7 @@ export default function HeroSection({
         />
         <div className="absolute top-0 bg-black opacity-60 h-full !w-full"></div>
         {heading && (
-          <p className="absolute top-[20rem] left-[38rem] text-xl md:text-3xl text-[#009dc4]">
+          <p className="absolute top-[5rem] left-[30%] sm:top-[20rem] sm:left-[38rem] font-semibold text-4xl text-[#009dc4]">
             {heading}
           </p>
         )}

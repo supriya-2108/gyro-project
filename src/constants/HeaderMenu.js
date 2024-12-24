@@ -3,6 +3,6 @@ export const MenuItems = [
   { title: "About", link: "/about" },
   { title: "Menu", link: "/menu" },
   { title: "Stories", link: "/" },
-  { title: "Previous Orders", link: "/orderSummary" },
+  { title: "MyCart", link: "/mycart" },
   { title: "Order Online", link: "/orderOnline" },
 ];

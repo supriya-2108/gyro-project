@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { AdminItems } from "../../constants/AdminMenu.js";
 import { ProductsTable } from "../../components/Admin/products-table";
 import { AddEditProductModal } from "../../components/Admin/add-edit-product-modal";
 import { DeleteConfirmationDialog } from "../../components/Admin/delete-confirmation-dialog";
 import { Sidebar } from "../../components/Admin/Sidebar";
 import { StatCard } from "../../components/Admin/Statscard";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 
 const initialProducts = [
   {
@@ -70,6 +71,11 @@ export default function AdminDashboard() {
   const [selectedDate, setSelectedDate] = useState("2024-12-20");
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
+  const location = useLocation();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
   const [stats, setStats] = useState({
     productCount: 0,
     categoriesCount: 0,
@@ -95,6 +101,12 @@ export default function AdminDashboard() {
     setSelectedDate(newDate);
   };
 
+  // useEffect(() => {
+  //   let userData = JSON.parse(localStorage.getItem("admintoken"));
+  //   if (!userData) {
+  //     navigate("/admin/login");
+  //   }
+  // }, []);
   // Filter orders and calculate stats whenever filters or orders change
   useEffect(() => {
     // Get orders for the selected date
@@ -142,6 +154,28 @@ export default function AdminDashboard() {
     const ordersForDate = ordersByDate[selectedDate] || [];
     setOrders(ordersForDate);
   }, [selectedDate]);
+  useEffect(() => {
+    let admintoken = localStorage.getItem("admintoken");
+    let userData;
+    console.log(admintoken);
+
+    if (admintoken) {
+      try {
+        userData = JSON.parse(admintoken);
+      } catch (error) {
+        console.error("Error parsing admintoken:", error);
+      }
+    }
+
+    if (!admintoken) {
+      navigate("/admin/login");
+    }
+  }, []);
+  const handleLogout = () => {
+    console.log("ini");
+
+    localStorage.removeItem("admintoken");
+  };
 
   return (
     <div className="flex h-screen bg-gray-100 overflow-x-hidden">
@@ -168,8 +202,8 @@ export default function AdminDashboard() {
                 </div>
                 {localStorage.getItem("admintoken") ? (
                   <button
-                    className="bg-gray-500 p-2 rounded-md text-white"
-                    onClick={undefined}
+                    className="bg-gray-500 p-2 rounded-md text-white max-sm:hidden"
+                    onClick={handleLogout}
                     type="button"
                   >
                     Logout
@@ -177,6 +211,29 @@ export default function AdminDashboard() {
                 ) : (
                   ""
                 )}
+                <button
+                  className="block sm:hidden text-black focus:outline-none"
+                  onClick={toggleMobileMenu}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d={
+                        isMobileMenuOpen
+                          ? "M6 18L18 6M6 6l12 12"
+                          : "M4 6h16M4 12h16m-16 6h16"
+                      }
+                    />
+                  </svg>
+                </button>
               </div>
             </header>
 
@@ -300,6 +357,39 @@ export default function AdminDashboard() {
         </>
       ) : (
         navigate("/admin/login")
+      )}
+      {isMobileMenuOpen && (
+        <div className="fixed top-0 left-0 w-full h-screen bg-black bg-opacity-50 flex items-center justify-center z-40">
+          <div className="bg-white rounded-lg w-4/5 p-5">
+            <button
+              className="absolute top-5 right-5 text-black"
+              onClick={toggleMobileMenu}
+            >
+              Close
+            </button>
+            <ul className="space-y-4">
+              {AdminItems.map((item, index) => (
+                <li key={index}>
+                  <Link
+                    to={item.link}
+                    className={`text-sm font-bold uppercase block ${
+                      location.pathname !== "/" ? "text-black" : "text-black"
+                    } hover:text-gray-300 transition-colors ${
+                      item.title === "Order Online"
+                        ? "bg-[#009dc4] p-3 rounded-md text-white"
+                        : ""
+                    }`}
+                    onClick={
+                      item.title === "Logout" ? handleLogout : toggleMobileMenu
+                    }
+                  >
+                    {item.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       )}
     </div>
   );

@@ -28,6 +28,8 @@ export default function OurMenu({ type }) {
   });
 
   const handleQuantityChange = (e) => {
+    console.log(e.target.value);
+
     setFoodItem((prev) => ({
       ...prev,
       quantity: parseInt(e.target.value), // Update quantity as a number
@@ -87,7 +89,7 @@ export default function OurMenu({ type }) {
     let data = {
       product_id: foodItem.Product,
       user_id: u_id,
-      quantity: 1,
+      quantity: foodItem?.quantity,
     };
     console.log(data, foodItem);
 
@@ -129,28 +131,33 @@ export default function OurMenu({ type }) {
         </div>
       )}
       <div className="max-sm:grid max-sm:grid-cols-4 max-sm:my-6 md:flex gap-y-2 gap-x-3 md:gap-6 justify-center w-full md:my-7">
-        {categories?.map((category, index) => (
-          <button
-            key={index}
-            onClick={() => handleCategoryChange(category)}
-            className={`flex items-center gap-2 py-1 px-3 md:px-6 md:py-3 rounded-lg transition-colors ${
-              activeTab === category
-                ? "bg-[#3d3b3a] text-white"
-                : "bg-gray-100 hover:bg-gray-200"
-            }`}
-          >
-            {/* Use icons dynamically based on category */}
-            {category === "main" && <Utensils className="w-4 h-4" />}
-            {category === "dessert" && <Candy className="w-4 h-4" />}
-            {category === "drinks" && <Wine className="w-4 h-4" />}
-            <span>
-              {category?.charAt(0)?.toUpperCase() + category?.slice(1)}
-            </span>
-          </button>
-        ))}
+        {categories ? (
+          categories?.map((category, index) => (
+            <button
+              key={index}
+              onClick={() => handleCategoryChange(category)}
+              className={`flex items-center gap-2 py-1 px-3 md:px-6 md:py-3 rounded-lg transition-colors ${
+                activeTab === category
+                  ? "bg-[#3d3b3a] text-white"
+                  : "bg-gray-100 hover:bg-gray-200"
+              }`}
+            >
+              {/* Use icons dynamically based on category */}
+              {category === "main" && <Utensils className="w-4 h-4" />}
+              {category === "dessert" && <Candy className="w-4 h-4" />}
+              {category === "drinks" && <Wine className="w-4 h-4" />}
+              <span>
+                {category?.charAt(0)?.toUpperCase() + category?.slice(1)}
+              </span>
+            </button>
+          ))
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
       <div className="grid lg:grid-cols-2 md:w-[85%] mx-auto gap-y-4">
-        {foodItems.length > 0 &&
+        {foodItems ? (
+          foodItems.length > 0 &&
           foodItems?.map((item, index) => (
             <div
               key={index}
@@ -198,7 +205,10 @@ export default function OurMenu({ type }) {
                 </span>
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
       <CustomModal
         isOpen={isModalOpen}
@@ -290,7 +300,7 @@ export default function OurMenu({ type }) {
                 Add More Items
               </button>
             </Link>
-            <Link to="/orderSummary" className="w-[50%]" onClick={handleSubmit}>
+            <Link to="/mycart" className="w-[50%]" onClick={handleSubmit}>
               <button className="bg-[#009dc4] text-white w-full py-3 my-6 rounded-lg">
                 Continue
               </button>
