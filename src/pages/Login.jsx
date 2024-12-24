@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../services/login";
 export default function Login() {
   const navigate = useNavigate();
+  const [error, setError] = useState();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -30,12 +31,19 @@ export default function Login() {
       localStorage.setItem("token", res.data);
       navigate("/login");
     }
-    console.log(res.status === 200);
+    if (res?.status !== 200) {
+      setError("Invalid password or email");
+      console.log(res);
+    }
   };
   return (
     <>
       {" "}
-      <HeroSection height={"16rem"} heading={"Login"} innerHeight="60vh" />
+      <HeroSection
+        height={"16rem"}
+        heading={"Please Login to continue"}
+        innerHeight="60vh"
+      />
       {localStorage.getItem("token") ? (
         <div className="text-center text-xl font-semibold h-[40%]">
           User already exists
@@ -92,6 +100,7 @@ export default function Login() {
                   </div>
                 </div>
 
+                <p className="text-red-500 text-[0.8rem]">{error}</p>
                 <div>
                   <button
                     type="submit"

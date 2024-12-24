@@ -28,8 +28,8 @@ export default function HeroSection({
         {heading && (
           <p
             className={`absolute top-[4rem] !text-center ${
-              heading !== "Login" ? "left-1/4" : "left-[11rem]"
-            } sm:top-[20rem] sm:left-[38rem] font-semibold text-4xl text-[#009dc4]`}
+              heading !== "Login" ? "left-14" : "left-[11rem]"
+            } sm:top-[20rem] sm:left-[38rem] font-semibold text-2xl sm:text-3xl text-[#009dc4]`}
           >
             {heading}
           </p>

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../../services/login";
 export default function AdminLogin() {
   const navigate = useNavigate();
+  const [error, setError] = useState();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -29,6 +30,10 @@ export default function AdminLogin() {
       navigate("/admin/dashboard");
     }
     console.log(res.status === 200);
+    if (res?.status !== 200) {
+      setError("Invalid password or email");
+      console.log(res);
+    }
   };
   return (
     <>
@@ -103,7 +108,7 @@ export default function AdminLogin() {
                     />
                   </div>
                 </div>
-
+                <p className="text-red-500 text-[0.8rem]">{error}</p>
                 <div>
                   <button
                     type="submit"
@@ -118,6 +123,7 @@ export default function AdminLogin() {
                     <span className="font-bold cursor-pointer">Register</span>
                   </Link>
                 </p>
+                <p className="text-red-700 text-[0.7rem]">{error}</p>
               </form>
             </div>
           </div>

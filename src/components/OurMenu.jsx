@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { Utensils, Candy, Wine } from "lucide-react";
 import CustomModal from "./CustomModal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addOns, foodItem } from "../constants/MenuItem";
 import { addProductToCart, getProductListForUser } from "../services/User";
 
@@ -13,6 +13,8 @@ export default function OurMenu({ type }) {
   const [activeTab, setActiveTab] = useState();
   const [foodItems, setFoodItems] = useState([]);
   const [allItems, setAllItems] = useState([]);
+
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [activeTitle, setActiveTitles] = useState([]);
@@ -86,17 +88,21 @@ export default function OurMenu({ type }) {
   const handleSubmit = async () => {
     let userData = JSON.parse(localStorage.getItem("token"));
     let u_id = userData;
+    console.log(foodItem?.quantity);
+
     let data = {
       product_id: foodItem.Product,
       user_id: u_id,
-      quantity: foodItem?.quantity,
+      quantity: foodItem?.quantity ? foodItem?.quantity : 1,
     };
     console.log(data, foodItem);
 
     let res = await addProductToCart(data);
     console.log(res);
-
-    setActiveTitles((prev) => [...prev, foodItem.title]);
+    if (res?.status == 200) {
+      navigate("/mycart");
+      setActiveTitles((prev) => [...prev, foodItem.title]);
+    }
   };
   console.log(activeTitle);
 
@@ -300,7 +306,7 @@ export default function OurMenu({ type }) {
                 Add More Items
               </button>
             </Link>
-            <Link to="/mycart" className="w-[50%]" onClick={handleSubmit}>
+            <Link to="" className="w-[50%]" onClick={handleSubmit}>
               <button className="bg-[#009dc4] text-white w-full py-3 my-6 rounded-lg">
                 Continue
               </button>
