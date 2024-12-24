@@ -29,7 +29,13 @@ export default function Header({ backgroundColor }) {
               key={index}
               to={item.link}
               className={`text-sm font-bold uppercase ${
-                location.pathname !== "/" ? "text-white" : "text-black"
+                location.pathname !== "/" &&
+                location.pathname !== "/login" &&
+                location.pathname !== "/menu" &&
+                location.pathname !== "/about" &&
+                location.pathname !== "/orderOnline"
+                  ? "text-white"
+                  : "text-black"
               } hover:text-gray-300 transition-colors ${
                 item.title === "Order Online"
                   ? "bg-[#009dc4] p-3 rounded-md text-white"
