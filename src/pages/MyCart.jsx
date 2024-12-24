@@ -89,15 +89,17 @@ const MyCart = () => {
               <div className="w-[50%] ml-10">
                 <p className="font-semibold mt-4">
                   Total Amount: $
-                  {foodSummary.reduce(
-                    (acc, red) =>
-                      acc + red.product_details[0]?.price * red.quantity,
-                    0
-                  ) +
+                  {(
+                    foodSummary.reduce(
+                      (acc, red) =>
+                        acc + red.product_details[0]?.price * red.quantity,
+                      0
+                    ) +
                     foodSummary.reduce(
                       (acc, red) => acc + (red.addOnPrice || 0),
                       0
-                    )}
+                    )
+                  ).toFixed(2)}
                 </p>
                 <button
                   className="bg-blue-800 my-5 text-white py-2 px-5 rounded-md"
