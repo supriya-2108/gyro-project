@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HeroSection from "../components/HeroSection";
 import { Images } from "../constants/Images";
 import MenuHeader from "../components/Menu/MenuHeader";
@@ -8,6 +8,12 @@ import { useNavigate } from "react-router-dom";
 
 const OrderOnline = () => {
   const navigate = useNavigate();
+  useEffect(() => {
+    let userData = JSON.parse(localStorage.getItem("token"));
+    if (!userData) {
+      navigate("/login");
+    }
+  }, []);
   return (
     <div>
       <HeroSection height={"16rem"} innerHeight="100vh" innerImages={true} />

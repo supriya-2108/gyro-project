@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { deleteCartList, getCartList } from "../services/User";
 
 const MyCart = () => {
+  const navigate = useNavigate();
   const [foodSummary, setFoodSummary] = useState();
   const [error, setError] = useState(false);
   const [msg, setMsg] = useState(false);
@@ -20,6 +21,9 @@ const MyCart = () => {
 
   const getCartItems = async () => {
     let userData = JSON.parse(localStorage.getItem("token"));
+    if (!userData) {
+      navigate("/login");
+    }
     let u_id = userData;
 
     let res = await getCartList({ user_id: u_id });
