@@ -151,7 +151,6 @@ export function AddEditProductModal({
                   type="file"
                   accept="image/*"
                   onChange={handleImageChange}
-                  required
                 />
 
                 {formData.imageUrl && (

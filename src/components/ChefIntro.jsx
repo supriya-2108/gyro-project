@@ -3,6 +3,7 @@ import "aos/dist/aos.css";
 import AOS from "aos";
 import StatsIntro from "../components/StatsIntro";
 import { useEffect } from "react";
+import { FaPhoneAlt } from "react-icons/fa";
 export default function ChefIntro() {
   useEffect(() => {
     AOS.init();
@@ -52,18 +53,12 @@ export default function ChefIntro() {
             </p>
             <div className="space-y-4 pt-4">
               <div className="flex max-sm:flex-col md:items-center md:gap-2 text-gray-600">
-                {/* <Clock className="h-5 w-5 text-[#009dc4]" /> */}
                 <span>Mon - Sat</span>
                 <span className="font-semibold">11 AM - 8 PM</span>
               </div>
               <div className="flex items-center gap-2">
-                {/* <Phone className="h-5 w-5 text-[#009dc4]" /> */}
-                <a
-                  href="tel:16366001333"
-                  className="md:text-4xl font-bold text-[#3d3b3a] transition-colors"
-                >
-                  16366001333
-                </a>
+                <FaPhoneAlt className="text-[#009dc4]" />
+                <a href="tel:+16366001333">+1 636 601 3333</a>
               </div>
             </div>
           </div>

@@ -10,15 +10,16 @@ import { addOns, foodItem } from "../constants/MenuItem";
 import { addProductToCart, getProductListForUser } from "../services/User";
 
 export default function OurMenu({ type }) {
-  const [activeTab, setActiveTab] = useState();
   const [foodItems, setFoodItems] = useState([]);
   const [allItems, setAllItems] = useState([]);
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // To toggle dropdown visibility
+
   const [activeTitle, setActiveTitles] = useState([]);
-  const [SelectedFoodItem, setSelectedFoodItem] = useState([]);
+  const [activeTab, setActiveTab] = useState(categories[0] || "");
   const [foodItem, setFoodItem] = useState({
     title: "",
     image: "",
@@ -104,7 +105,7 @@ export default function OurMenu({ type }) {
       setActiveTitles((prev) => [...prev, foodItem.title]);
     }
   };
-  console.log(activeTitle);
+  console.log(activeTab);
 
   const closeModal = () => setIsModalOpen(false);
   console.log(activeTitle);
@@ -136,31 +137,62 @@ export default function OurMenu({ type }) {
           </h1>
         </div>
       )}
-      <div className="max-sm:grid max-sm:grid-cols-4 max-sm:my-6 md:flex gap-y-2 gap-x-3 md:gap-6 justify-center w-full md:my-7">
-        {categories ? (
-          categories?.map((category, index) => (
-            <button
-              key={index}
-              onClick={() => handleCategoryChange(category)}
-              className={`flex items-center gap-2 py-1 px-3 md:px-6 md:py-3 rounded-lg transition-colors ${
-                activeTab === category
-                  ? "bg-[#3d3b3a] text-white"
-                  : "bg-gray-100 hover:bg-gray-200"
-              }`}
-            >
-              {/* Use icons dynamically based on category */}
-              {category === "main" && <Utensils className="w-4 h-4" />}
-              {category === "dessert" && <Candy className="w-4 h-4" />}
-              {category === "drinks" && <Wine className="w-4 h-4" />}
-              <span>
-                {category?.charAt(0)?.toUpperCase() + category?.slice(1)}
-              </span>
-            </button>
-          ))
-        ) : (
-          <p>Loading...</p>
-        )}
+      <div className="max-sm:my-6 md:flex gap-y-2 gap-x-3 md:gap-6 justify-center w-full md:my-7">
+        <div className="hidden max-sm:hidden md:flex gap-3">
+          {categories ? (
+            categories.map((category, index) => (
+              <button
+                key={index}
+                onClick={() => handleCategoryChange(category)}
+                className={`flex items-center gap-2 py-1 px-3 md:px-6 md:py-3 rounded-lg transition-colors ${
+                  activeTab === category
+                    ? "bg-[#3d3b3a] text-white"
+                    : "bg-gray-100 hover:bg-gray-200"
+                }`}
+              >
+                {category === "main" && <Utensils className="w-4 h-4" />}
+                {category === "dessert" && <Candy className="w-4 h-4" />}
+                {category === "drinks" && <Wine className="w-4 h-4" />}
+                <span>
+                  {category?.charAt(0)?.toUpperCase() + category?.slice(1)}
+                </span>
+              </button>
+            ))
+          ) : (
+            <p>Loading...</p>
+          )}
+        </div>
+        <div className="relative w-full max-sm:block md:hidden">
+          <div
+            className="w-full p-2 rounded-lg border bg-gray-100 text-gray-700 cursor-pointer"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          >
+            {activeTab.charAt(0).toUpperCase() + activeTab.slice(1) ||
+              "Select a category"}
+            <span className="float-right">&#9662;</span>
+          </div>
+          {isDropdownOpen && (
+            <ul className="absolute w-full mt-1 bg-white border rounded-lg shadow-md z-10">
+              {categories.length > 0 ? (
+                categories.map((category, index) => (
+                  <li
+                    key={index}
+                    className={`p-2 cursor-pointer hover:bg-gray-200 ${
+                      activeTab === category ? "bg-gray-100 font-bold" : ""
+                    }`}
+                    onClick={() => handleCategoryChange(category)} // Handle category selection
+                  >
+                    {category.charAt(0).toUpperCase() + category.slice(1)}
+                  </li>
+                ))
+              ) : (
+                <li className="p-2 text-gray-500">Loading...</li>
+              )}
+            </ul>
+          )}
+        </div>
       </div>
+
       <div className="grid lg:grid-cols-2 md:w-[85%] mx-auto gap-y-4">
         {foodItems ? (
           foodItems.length > 0 &&
