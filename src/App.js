@@ -14,6 +14,7 @@ import AdminProductList from "./pages/Admin/ProductList";
 import AdminUsers from "./pages/Admin/Users";
 import AdminRegister from "./pages/Admin/Register";
 import MyCart from "./pages/MyCart";
+import Checkout from "./pages/Checkout";
 function App() {
   return (
     <AppProvider>
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/register" element={<Register />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/orderOnline" element={<OrderOnline />} />

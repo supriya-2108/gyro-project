@@ -119,9 +119,11 @@ const MyCart = () => {
                   </p>
                 )}{" "}
                 {msg && (
-                  <p className="text-green-700 -mt-2 mb-4">
-                    Proceeding to checkout
-                  </p>
+                  <Link to="/checkout">
+                    <p className="text-green-700 -mt-2 mb-4">
+                      Proceeding to checkout
+                    </p>
+                  </Link>
                 )}
               </div>
             )}
