@@ -60,25 +60,6 @@ export default function HeroSection({
           )}
         </div>
 
-        {/* {!innerImages
-          ? InnerImages && (
-              <div className="flex justify-evenly w-full absolute bottom-[11rem] px-10">
-                {InnerImages?.map((item) => (
-                  <Link to={item.link}>
-                    <div
-                      className="justify-center items-center flex flex-col text-white"
-                      onC
-                    >
-                      
-                      <p className="text-xl lg:text-3xl font-medium">
-                        {item.title}
-                      </p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )
-          : ""} */}
         {heading !== "Please Login to continue" && <OrderingOptions />}
       </div>
     </>

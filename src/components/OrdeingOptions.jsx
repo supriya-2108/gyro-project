@@ -28,9 +28,9 @@ const orderingOptions = [
 
 export function OrderingOptions() {
   return (
-    <div className="w-full absolute !top-[18rem] px-4 py-16 sm:px-6 lg:px-8 ">
-      <div className="mx-auto max-w-4xl">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+    <div className=" w-full absolute !top-[4rem] md:!top-[18rem] px-4 py-16 sm:px-6 lg:px-8 ">
+      <div className="mx-auto w-[100%] md:max-w-4xl">
+        <div className="grid !gap-5 md:!gap-8 grid-cols-3 lg:grid-cols-3">
           {orderingOptions.map((option) => (
             <motion.div
               key={option.title}
@@ -43,13 +43,13 @@ export function OrderingOptions() {
                 className={`flex flex-col items-center rounded-2xl p-4 text-center shadow-lg 
                   ${option.color} hover:shadow-xl transition-all duration-300`}
               >
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm">
-                  <option.icon className="h-8 w-8 text-white" />
+                <div className="flex h-10 w-10 md:h-16 md:w-16 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm">
+                  <option.icon className=" md:h-8 md:w-8 text-white" />
                 </div>
-                <h3 className="mt-6 text-xl font-semibold text-white">
+                <h3 className="md:mt-6 text-sm md:text-xl font-semibold text-white">
                   {option.title}
                 </h3>
-                <p className="mt-2 text-gray-100 text-sm">
+                <p className="md:mt-2 text-gray-100 text-[0.5rem] md:text-sm max-sm:hidden">
                   {option.description}
                 </p>
                 {/* <div className="mt-4 flex items-center justify-center">
