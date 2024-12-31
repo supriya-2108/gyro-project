@@ -18,19 +18,18 @@ export const Images = [
 
 export const InnerImages = [
   {
-    title: "Chicken Gyro",
-    ingredients: "Grilled Chiken, feta cheese, crumbles, lettice",
-
-    src: "https://therecipecritic.com/wp-content/uploads/2016/01/slowcookerchickengyros2.jpg",
+    title: "Pickup",
+    link: "http://localhost:3001/orderOnline",
+    src: "https://g.foolcdn.com/editorial/images/527662/food-delivery-by-bicyclist.jpg",
   },
   {
-    title: "Greek Sub/Gyro",
-    ingredients: "Gyro slices or grilled chiken,lettuce,french bread,tomato,",
-    src: "https://www.thespruceeats.com/thmb/HsjQq2mNZOltkvy77uQV2c8rCN0=/3865x2576/filters:fill(auto,1)/gyros-doner-kebab-184122806-582494e25f9b58d5b15af618.jpg",
+    title: "Dinein",
+    link: "http://localhost:3001/orderOnline",
+    src: "https://apiexcellent.com/images/digital/product/finedinelove-digital10339.webp",
   },
   {
-    title: "Hummus Plate",
-    ingredients: "Roasted galic hummus served with 2 sliced pitas",
-    src: "http://www.howsweeteats.com/wp-content/uploads/2018/07/hummus-trio-I-howsweeteats.com-22.jpg",
+    title: "UberEats",
+    link: "https://www.ubereats.com/store/gyro-gyro/qCCcsGJLXnmODbWkckPY2w?diningMode=DELIVERY",
+    src: "https://static.vecteezy.com/system/resources/previews/018/970/056/non_2x/uber-eats-logo-on-green-background-editorial-logo-free-vector.jpg",
   },
 ];

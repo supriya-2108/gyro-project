@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import HeroSection from "../components/HeroSection";
 import { useAppContext } from "../Context";
@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { generateOTP, generateUser } from "../services/register";
 import Step2 from "../components/Register/Step2";
 import Step1 from "../components/Register/Step1";
+import Header from "../components/Header";
 const AdminRegister = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
@@ -25,6 +26,14 @@ const AdminRegister = () => {
     }));
   };
 
+  const handlePhoneChange = (val) => {
+    console.log(val);
+
+    setFormData((prev) => ({
+      ...prev,
+      number: val,
+    }));
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     let res = await generateOTP({ email: formData.email });
@@ -36,6 +45,8 @@ const AdminRegister = () => {
 
   const handleSubmit1 = async (e) => {
     e.preventDefault();
+    console.log(formData);
+
     let res = await generateUser(formData);
     if (res?.status == 200) {
       let data = res?.data?.user?._id;
@@ -44,11 +55,16 @@ const AdminRegister = () => {
     }
     console.log(res);
   };
-
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+    if (token) {
+      navigate("/");
+    }
+  }, []);
   return (
     <div>
       {" "}
-      <HeroSection height={"16rem"} heading={"Register"} innerHeight="60vh" />
+      <Header backgroundColor={"bg-gray-800 relative"} />
       {localStorage.getItem("token") ? (
         <div className="text-center text-xl font-semibold h-[40%]">
           User already exists
@@ -61,7 +77,7 @@ const AdminRegister = () => {
             </h2>
           </div>
 
-          <div className="mt-8 max-sm:w-[80%] mx-auto sm:w-full ">
+          <div className="mt-8 max-sm:w-[80%] mx-auto ">
             <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
               {step === 1 ? (
                 <Step1
@@ -73,6 +89,7 @@ const AdminRegister = () => {
                 <Step2
                   handleSubmit={handleSubmit1}
                   formData={formData}
+                  handlePhoneChange={handlePhoneChange}
                   handleInputChange={handleInputChange}
                 />
               )}

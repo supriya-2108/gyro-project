@@ -54,22 +54,38 @@ const MyCart = () => {
           <>
             {foodSummary &&
               foodSummary?.map((food) => (
-                <div className="flex  max-sm:flex-col md:justify-between md:items-end  mx-auto md:w-[100%]">
-                  <div className=" w-[80%] rounded-md mx-auto md:w-[50%] flex  max-sm:flex-col md:gap-10 md:items-start md:justify-start md:ml-36">
+                <div className="flex  max-sm:flex-col md:justify-between md:items-end mb-12 md:w-[80%]">
+                  <div className=" w-[80%] rounded-md mx-auto md:w-[80%] flex  max-sm:flex-col md:gap-10 md:items-start md:justify-start md:ml-36">
                     <img
                       src={food.product_details?.[0].image}
-                      className="h-[10rem] object-cover rounded-md md:w-[15rem] md:h-[15rem]"
+                      className="h-[10rem] object-cover rounded-md md:w-[20rem] md:h-[20rem]"
                     />
                     <div className=" mt-2 md:mt-10">
                       <h1 className="text-2xl md:text-4xl font-semibold">
                         {food.product_details?.[0].name}
                       </h1>
-                      <p className="md:mt-4 mb-2 max-sm:text-sm">
+                      <p className="md:mt-4 mb-2 text-gray-700 font-medium max-sm:text-sm">
                         Ingredients: {food.product_details?.[0].description}
                       </p>
-                      <p>Price: ${food.product_details?.[0].price}</p>
-                      <p>Add Ons: ${food.product_details?.[0].addOnPrice}.00</p>
-                      <p>
+                      <p className="text-gray-600 text-[0.9rem] font-medium mt-4 mb-1">
+                        Price: ${food.product_details?.[0].price}
+                      </p>
+                      <p className="text-gray-600 text-[0.9rem] font-medium mb-1">
+                        Tax : $
+                        {(food.product_details?.[0].price * 0.08238).toFixed(2)}
+                        %
+                      </p>
+                      <p className="text-gray-600 text-[0.9rem] font-medium mb-1">
+                        Add Ons: ${food.product_details?.[0].addOnPrice}
+                      </p>
+                      <p className="text-gray-600 text-[0.9rem] font-medium mb-1">
+                        Total : $
+                        {(
+                          food.product_details?.[0].price +
+                          food.product_details?.[0].price * 0.08238
+                        ).toFixed(2)}
+                      </p>
+                      <p className="text-gray-600 text-[0.9rem] font-medium mb-1">
                         Special Note: {food.product_details?.[0].specialNote}
                       </p>{" "}
                     </div>
@@ -79,34 +95,41 @@ const MyCart = () => {
                       className="border border-red-500 text-red-500 p-1 md:p-2 rounded-md"
                       onClick={() => handledeleteItem(food._id)}
                     >
-                      Remove Item
+                      Remove
                     </button>
                   </div>
                   <hr className="max-sm:my-4" />
                 </div>
               ))}
             {foodSummary && (
-              <div className="w-[50%] ml-10">
-                <p className="font-semibold mt-4">
-                  Total Amount: $
-                  {(
-                    foodSummary.reduce(
-                      (acc, red) =>
-                        acc + red.product_details[0]?.price * red.quantity,
-                      0
-                    ) +
-                    foodSummary.reduce(
-                      (acc, red) => acc + (red.addOnPrice || 0),
-                      0
-                    )
-                  ).toFixed(2)}
-                </p>
-                <button
-                  className="bg-blue-800 my-5 text-white py-2 px-5 rounded-md"
-                  onClick={handlePayment}
-                >
-                  Checkout for Payment
-                </button>
+              <div className="w-[80%] flex justify-end ml-10 border-b">
+                <div>
+                  <p className="font-semibold mt-4">
+                    Total Amount: $
+                    {(
+                      foodSummary.reduce(
+                        (acc, red) =>
+                          acc +
+                          (
+                            red.product_details[0]?.price +
+                            red.product_details[0]?.price * 0.0832
+                          ).toFixed(2) *
+                            red.quantity,
+                        0
+                      ) +
+                      foodSummary.reduce(
+                        (acc, red) => acc + (red.addOnPrice || 0),
+                        0
+                      )
+                    ).toFixed(2)}
+                  </p>
+                  <button
+                    className="bg-blue-800 my-5 text-white py-2 px-5 rounded-md"
+                    onClick={handlePayment}
+                  >
+                    Checkout for Payment
+                  </button>
+                </div>
                 {error && (
                   <p className="text-red-700 -mt-2 mb-4">
                     Please{" "}

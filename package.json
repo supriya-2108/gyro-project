@@ -11,6 +11,8 @@
     "aos": "^2.3.4",
     "axios": "^1.7.9",
     "cors": "^2.8.5",
+    "framer-motion": "^11.15.0",
+    "intl-tel-input": "^25.2.0",
     "lucide-react": "^0.469.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

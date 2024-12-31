@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import HeroSection from "../components/HeroSection";
 import { useAppContext } from "../Context";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../services/login";
+import Header from "../components/Header";
 export default function Login() {
   const navigate = useNavigate();
   const [error, setError] = useState();
@@ -27,23 +28,29 @@ export default function Login() {
     let res = await loginUser(formData);
     if (res?.status === 200) {
       console.log(res);
-
-      localStorage.setItem("token", res.data);
-      navigate("/login");
+      localStorage.setItem("token", JSON.stringify(res.data.token));
+      localStorage.setItem(
+        "useremail",
+        JSON.stringify(res.data.user_info.user_email)
+      );
+      navigate("/");
     }
     if (res?.status !== 200) {
       setError("Invalid password or email");
       console.log(res);
     }
   };
+
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+    if (token) {
+      navigate("/");
+    }
+  }, []);
   return (
     <>
       {" "}
-      <HeroSection
-        height={"16rem"}
-        heading={"Please Login to continue"}
-        innerHeight="60vh"
-      />
+      <Header backgroundColor={"bg-gray-800 relative"} />
       {localStorage.getItem("token") ? (
         <div className="text-center text-xl font-semibold h-[40%]">
           User already exists

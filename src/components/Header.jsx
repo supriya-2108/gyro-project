@@ -19,8 +19,8 @@ export default function Header({ backgroundColor }) {
         <img
           src="/gyro_logo.jpg"
           alt="Restaurant Logo"
-          width={60}
-          height={40}
+          width={100}
+          height={50}
           className="mr-4"
         />
         <div className="flex space-x-6 items-center max-sm:hidden">
@@ -29,13 +29,12 @@ export default function Header({ backgroundColor }) {
               key={index}
               to={item.link}
               className={`text-sm font-bold uppercase ${
-                location.pathname !== "/" &&
-                location.pathname !== "/login" &&
-                location.pathname !== "/menu" &&
-                location.pathname !== "/about" &&
-                location.pathname !== "/orderOnline"
-                  ? "text-white"
-                  : "text-black"
+                location.pathname == "/" ||
+                location.pathname == "/menu" ||
+                location.pathname == "/about" ||
+                location.pathname == "/orderOnline"
+                  ? "text-black"
+                  : "text-white"
               } hover:text-gray-300 transition-colors ${
                 item.title === "Order Online"
                   ? "bg-[#009dc4] p-3 rounded-md text-white"

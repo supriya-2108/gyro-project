@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import PhoneInput from "../PhoneInput";
 
-const Step2 = ({ formData, handleInputChange, handleSubmit }) => {
+const Step2 = ({
+  formData,
+  handleInputChange,
+  handlePhoneChange,
+  handleSubmit,
+}) => {
   return (
     <div>
       <form className="space-y-6" onSubmit={handleSubmit}>
@@ -55,15 +61,14 @@ const Step2 = ({ formData, handleInputChange, handleSubmit }) => {
             Mobile Number
           </label>
           <div className="mt-1">
-            <input
-              id="number"
-              name="number"
-              type="number"
-              value={formData.number}
-              onChange={handleInputChange}
-              required
-              className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
+            <div class="form-group">
+              <PhoneInput
+                id="number"
+                name="number"
+                initialCountry="in"
+                onChange={handlePhoneChange}
+              />
+            </div>
           </div>
         </div>
         <div>

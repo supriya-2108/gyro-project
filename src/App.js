@@ -15,6 +15,7 @@ import AdminUsers from "./pages/Admin/Users";
 import AdminRegister from "./pages/Admin/Register";
 import MyCart from "./pages/MyCart";
 import Checkout from "./pages/Checkout";
+import MyAccountPage from "./pages/MyAccount";
 function App() {
   return (
     <AppProvider>
@@ -27,6 +28,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/orderOnline" element={<OrderOnline />} />
+          <Route path="/myaccount" element={<MyAccountPage />} />
           <Route path="/mycart" element={<MyCart />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/register" element={<AdminRegister />} />

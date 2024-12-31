@@ -13,7 +13,7 @@ export default function Carousel({ currentIndex, setCurrentIndex, height }) {
   }, []);
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full bg-black/40 backdrop-blur-sm">
       {/* Image Carousel */}
       <div className={`relative h-[${height}] w-full overflow-hidden`}>
         {Images.map((image, index) => (

@@ -5,6 +5,8 @@ import OurMenu from "../components/OurMenu";
 import Footer from "../components/Footer";
 import { Images } from "../constants/Images";
 import { useNavigate } from "react-router-dom";
+import ReviewSection from "../components/review-section";
+import Map from "../components/Map";
 const Home = () => {
   const navigate = useNavigate();
   useEffect(() => {
@@ -18,6 +20,8 @@ const Home = () => {
       <HeroSection Images={Images} height={"100vh"} innerHeight="100vh" />{" "}
       <ChefIntro />
       <OurMenu />
+      <ReviewSection />
+      <Map />
       <Footer />
     </div>
   );
