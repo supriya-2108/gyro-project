@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const orderingOptions = [
   {
-    title: "Pickup",
+    title: "Carryout",
     icon: ShoppingBag,
     description: "Order ahead and pick up at your convenience",
     href: "http://localhost:3001/orderOnline",

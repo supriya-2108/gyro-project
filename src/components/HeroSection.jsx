@@ -29,8 +29,8 @@ export default function HeroSection({
         <div className="absolute top-0 bg-black opacity-70 h-full !w-full backdrop-blur-xl"></div>
         {heading && (
           <p
-            className={`absolute !top-[13rem] !text-center ${
-              heading !== "Login" ? "left-14" : "left-[11rem]"
+            className={`absolute !top-[5rem] !text-center ${
+              heading !== "Login" ? "left-[10rem]" : "left-[11rem]"
             } sm:top-[20rem] sm:left-[38rem] font-semibold text-2xl sm:text-3xl text-[#009dc4]`}
           >
             {heading}
