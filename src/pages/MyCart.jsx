@@ -123,12 +123,14 @@ const MyCart = () => {
                       )
                     ).toFixed(2)}
                   </p>
-                  <button
-                    className="bg-blue-800 my-5 text-white py-2 px-5 rounded-md"
-                    onClick={handlePayment}
-                  >
-                    Checkout for Payment
-                  </button>
+                  {!msg && (
+                    <button
+                      className="bg-blue-800 my-5 text-white py-2 px-5 rounded-md"
+                      onClick={handlePayment}
+                    >
+                      Checkout for Payment
+                    </button>
+                  )}
                 </div>
                 {error && (
                   <p className="text-red-700 -mt-2 mb-4">
@@ -143,9 +145,9 @@ const MyCart = () => {
                 )}{" "}
                 {msg && (
                   <Link to="/checkout">
-                    <p className="text-green-700 -mt-2 mb-4">
+                    <button className="bg-green-700 text-white p-2 rounded-md mx-5">
                       Proceeding to checkout
-                    </p>
+                    </button>
                   </Link>
                 )}
               </div>
