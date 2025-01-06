@@ -2,25 +2,26 @@ import React, { useEffect, useState } from "react";
 import { Star } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css"; // AOS CSS
+import { Link } from "react-router-dom";
 
 const reviews = [
   {
     id: 1,
-    name: "KATIE R.",
+    name: "Jody W.",
     image:
-      "https://tse4.mm.bing.net/th?id=OIP.lfq10Y4d1zOMcd_dvEw80AHaGR&pid=Api&P=0&h=180",
-    date: "7/22/2018 via Yelp",
+      "https://s3-media0.fl.yelpcdn.com/photo/GIvjFkSb9hc96JRHJon38Q/60s.jpg",
+    date: "Mar 10, 2023 via Yelp",
     platform: "Yelp",
-    text: "Third dinner here in the past two weeks and it just keeps getting better! Love every dish on the menu, especially the...",
+    text: "Great little spot! Found it here on Yelp by searching for Mediterranean takeout and ordered my dinner between meetings. Excellent dips, plentiful pita, awesome stuffed grape leaves and solid Greek salad. Food was ready quickly and the person there was friendly.",
   },
   {
     id: 2,
-    name: "NICK T.",
+    name: "Seamus R.",
     image:
-      "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?cs=srgb&dl=pexels-italo-melo-2379005.jpg&fm=jpg",
-    date: "7/13/2018 via Yelp",
+      "https://s3-media0.fl.yelpcdn.com/assets/public/default_user_avatar_64x64_v2.yji-19e0a8ff85b15f4bbd79.png",
+    date: "Oct 21, 2023 via Yelp",
     platform: "Yelp",
-    text: "It is the bomb! Must try This restauranteur loves what they do and it shows. The food was phenomenal, service was great...",
+    text: "Fantastic! Super soft fresh pitas big enough to hold the healthy helpings of toppings and meat. Really friendly service. Hummus was delicious. Everything just had a feeling of someone who really cares about what they do. Will be going back on the regular.",
   },
   {
     id: 3,
@@ -33,45 +34,33 @@ const reviews = [
   },
   {
     id: 4,
-    name: "JOHN D.",
+    name: "Steven D.",
     image:
-      "https://images.pexels.com/photos/1053497/pexels-photo-1053497.jpeg?cs=srgb&dl=pexels-photo-1053497.jpg&fm=jpg",
-    date: "7/05/2018 via Yelp",
+      "https://s3-media0.fl.yelpcdn.com/photo/NksVl1zXq0tYWJOrwsSAMA/60s.jpg",
+    date: "May 19, 2023 via Yelp",
     platform: "Yelp",
-    text: "Loved the atmosphere! Excellent service, and the food was just as good as I had hoped for. Highly recommend...",
-  },
-  {
-    id: 5,
-    name: "SARAH W.",
-    image:
-      "https://images.pexels.com/photos/2272336/pexels-photo-2272336.jpeg?cs=srgb&dl=pexels-sarah-ludwig-2272336.jpg&fm=jpg",
-    date: "6/28/2018 via Yelp",
-    platform: "Yelp",
-    text: "Amazing experience! The flavors were outstanding, and I would definitely return for another meal soon...",
-  },
-  {
-    id: 6,
-    name: "SARAH W.",
-    image:
-      "https://images.pexels.com/photos/2272336/pexels-photo-2272336.jpeg?cs=srgb&dl=pexels-sarah-ludwig-2272336.jpg&fm=jpg",
-    date: "6/28/2018 via Yelp",
-    platform: "Yelp",
-    text: "Amazing experience! The flavors were outstanding, and I would definitely return for another meal soon...",
+    text: "friendly service, clean spot. However, have had a few sandwiches and they were just not great barely good. Falafel and toppings w bread just congeal to a gummy mushy consistency. Have ordered twice and same experience. Hummus was delish though! Strong tahini flavor and great whipped texture.Lentil soup had too much lemon and tasted like the fake stuff.Seems like a hot or miss here so order what looks freshest and talk to the makers about what's best that day.",
   },
 ];
 
 function ReviewSection() {
   const [activePage, setActivePage] = useState(0);
 
-  useEffect(() => {
-    AOS.init({ duration: 1000 }); // Initialize AOS with a 1-second animation duration
-    const intervalId = setInterval(() => {
-      setActivePage((prevPage) => (prevPage + 1) % (reviews.length - 2)); // Ensure 3 cards are visible at a time
-    }, 2000); // Change review every 5 seconds
+  const [expandedReviews, setExpandedReviews] = useState({});
+  // useEffect(() => {
+  //   AOS.init({ duration: 1000 });
+  //   const intervalId = setInterval(() => {
+  //     setActivePage((prevPage) => (prevPage + 1) % (reviews.length - 2));
+  //   }, 2000);
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
-    // Cleanup interval on component unmount
-    return () => clearInterval(intervalId);
-  }, []);
+  const toggleReview = (id) => {
+    setExpandedReviews((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
 
   const reviewsToShow = reviews.slice(activePage, activePage + 3);
 
@@ -81,16 +70,14 @@ function ReviewSection() {
         <h2 className="text-4xl font-bold text-gray-800 mb-4">
           WHAT OTHERS ARE SAYING...
         </h2>
-        <p className="text-red-600 font-semibold">SEE REVIEWS FROM GOOGLE</p>
+        <Link to="https://www.yelp.com/biz/gyro-gyro-hartsdale">
+          <p className="text-red-600 font-semibold">SEE REVIEWS FROM GOOGLE</p>
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {reviewsToShow.map((review) => (
-          <div
-            key={review.id}
-            className="border-0 shadow-lg"
-            data-aos="fade-up"
-          >
+          <div key={review.id} className="border-0 shadow-lg">
             <div className="p-6">
               <div className="flex items-start gap-4">
                 <img
@@ -114,12 +101,25 @@ function ReviewSection() {
                   <p className="text-sm text-gray-500 mb-4">{review.date}</p>
                 </div>
               </div>
-              <p className="text-gray-600 mt-4">
-                {review.text}{" "}
-                <button className="text-red-600 hover:text-red-700 font-medium">
-                  Read more
-                </button>
+              <p
+                className={`text-gray-600 mt-4 ${
+                  expandedReviews[review.id] ? "" : "line-clamp-2"
+                }`}
+                style={{
+                  overflow: expandedReviews[review.id] ? "visible" : "hidden",
+                  display: "-webkit-box",
+                  WebkitLineClamp: expandedReviews[review.id] ? "none" : 2,
+                  WebkitBoxOrient: "vertical",
+                }}
+              >
+                {review.text}
               </p>
+              <button
+                onClick={() => toggleReview(review.id)}
+                className="text-red-600 hover:text-red-700 font-medium"
+              >
+                {expandedReviews[review.id] ? "Show less" : "Read more"}
+              </button>
             </div>
           </div>
         ))}

@@ -12,7 +12,6 @@ export default function HeroSection({
   innerHeight,
   innerImages,
 }) {
-  console.log(heading);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   return (
@@ -29,9 +28,9 @@ export default function HeroSection({
         <div className="absolute top-0 bg-black opacity-70 h-full !w-full backdrop-blur-xl"></div>
         {heading && (
           <p
-            className={`absolute !top-[5rem] !text-center ${
-              heading !== "Login" ? "left-[10rem]" : "left-[11rem]"
-            } sm:top-[20rem] sm:left-[38rem] font-semibold text-2xl sm:text-3xl text-[#009dc4]`}
+            className={`absolute top-[4rem] sm:!top-[10rem] !text-center ${
+              heading !== "Login" ? "left-[8rem]" : "left-[11rem]"
+            } sm:left-[38rem] font-semibold text-2xl sm:text-5xl text-[#009dc4]`}
           >
             {heading}
           </p>

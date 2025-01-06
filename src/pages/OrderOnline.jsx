@@ -21,26 +21,6 @@ const OrderOnline = () => {
         <p className="max-sm:ml-10 -ml-28 max-sm:text-xl text-4xl">
           Select your preference
         </p>
-        <div className="flex sm:flex-col !gap-5">
-          <button
-            className=" bg-[#c8a97e] text-white w-[10rem] md:w-[12rem] py-2 sm:py-1 md:py-2 rounded-md -ml-7 max-sm:mr-5"
-            onClick={() => {
-              navigate("/menu");
-              localStorage.setItem("mode", "pickup");
-            }}
-          >
-            Pickup
-          </button>
-          <button
-            className="bg-[#c8a97e] text-white w-[10rem] md:w-[12rem] py-2 sm:py-1 md:py-2 rounded-md -ml-7"
-            onClick={() => {
-              navigate("/menu");
-              localStorage.setItem("mode", "dinein");
-            }}
-          >
-            Dining In
-          </button>
-        </div>
       </div>
       <Footer />
     </div>

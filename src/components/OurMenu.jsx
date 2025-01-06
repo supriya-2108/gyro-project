@@ -26,7 +26,8 @@ export default function OurMenu({ type }) {
     description: "",
     price: 0,
     specialNote: "",
-    addOns: 0,
+    addOns: [],
+    addOnPrice: 0,
     quantity: 1, // Add a default quantity here
   });
 
@@ -70,12 +71,17 @@ export default function OurMenu({ type }) {
   };
   const openModalForSubMenu = (item) => {
     //   /  setIsModalOpen(true);
+    console.log(item);
+
     setFoodItem((prev) => ({
       ...prev,
-      addOns: item.addOns,
-      addOnPrice: item.addOnPrice,
+      addOns: Array.isArray(prev.addOns)
+        ? [...prev.addOns, item.title]
+        : [item.title],
+      addOnPrice: prev.addOnPrice + item.price,
     }));
   };
+  console.log(foodItem.addOns);
 
   const handleCategoryChange = (category) => {
     const trimmedCategory = category.trim().toLowerCase(); // Trim and convert to lowercase
@@ -96,7 +102,7 @@ export default function OurMenu({ type }) {
       user_id: u_id,
       quantity: foodItem?.quantity ? foodItem?.quantity : 1,
     };
-    console.log(data, foodItem);
+    console.log(foodItem.addOns);
 
     let res = await addProductToCart(data);
     console.log(res);
@@ -105,10 +111,8 @@ export default function OurMenu({ type }) {
       setActiveTitles((prev) => [...prev, foodItem.title]);
     }
   };
-  console.log(activeTab);
 
   const closeModal = () => setIsModalOpen(false);
-  console.log(activeTitle);
 
   return (
     <div
@@ -300,7 +304,9 @@ export default function OurMenu({ type }) {
           <div className="grid md:grid-cols-2 mx-auto gap-5">
             {addOns?.map((item, index) => (
               <div
-                className="flex cursor-pointer w-[full] justify-between p-5 bg-white shadow-xl hover:bg-[#009dc4] hover:text-white border border-gray-200 rounded-lg"
+                className={`flex cursor-pointer w-[full] justify-between p-5 bg-white shadow-xl hover:bg-[#009dc4]  border border-gray-200 rounded-lg ${
+                  foodItem?.addOns?.includes(item.title) ? "!bg-[#009dc4]" : ""
+                }`}
                 onClick={() => openModalForSubMenu(item)}
               >
                 <h3 className="font-medium text-lg">{item.title}</h3>

@@ -7,14 +7,14 @@ const orderingOptions = [
     title: "Carryout",
     icon: ShoppingBag,
     description: "Order ahead and pick up at your convenience",
-    href: "http://localhost:3001/orderOnline",
+    href: "/menu",
     color: "from-cyan-500 to-teal-500",
   },
   {
     title: "Dine-in",
     icon: UtensilsCrossed,
     description: "Join us for an authentic Mediterranean experience",
-    href: "http://localhost:3001/orderOnline",
+    href: "/menu",
     color: "from-cyan-400 to-blue-500",
   },
   {
@@ -52,24 +52,6 @@ export function OrderingOptions() {
                 <p className="md:mt-2 text-gray-100 text-[0.5rem] md:text-sm max-sm:hidden">
                   {option.description}
                 </p>
-                {/* <div className="mt-4 flex items-center justify-center">
-                  <span className="text-white text-sm font-medium">
-                    Order Now
-                  </span>
-                  <svg
-                    className="ml-2 h-4 w-4 text-white transition-transform group-hover:translate-x-1"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </div> */}
               </Link>
             </motion.div>
           ))}
