@@ -56,3 +56,18 @@ export const deleteCartList = async (id) => {
     return res;
   } catch (error) {}
 };
+
+export const createCheckout = async (data) => {
+  try {
+    const res = await axios.post(
+      `https://gyroserver.vercel.app/user/v1/operation/create_checkout`,
+      data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return res;
+  } catch (error) {}
+};

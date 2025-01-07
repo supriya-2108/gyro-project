@@ -17,7 +17,7 @@ export default function OurMenu({ type }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // To toggle dropdown visibility
-
+  const [addOnsList, setAddOnsList] = useState([]);
   const [activeTitle, setActiveTitles] = useState([]);
   const [activeTab, setActiveTab] = useState(categories[0] || "");
   const [foodItem, setFoodItem] = useState({
@@ -72,7 +72,7 @@ export default function OurMenu({ type }) {
   const openModalForSubMenu = (item) => {
     //   /  setIsModalOpen(true);
     console.log(item);
-
+    setAddOnsList((prev) => [...prev, item]);
     setFoodItem((prev) => ({
       ...prev,
       addOns: Array.isArray(prev.addOns)
@@ -101,9 +101,10 @@ export default function OurMenu({ type }) {
       product_id: foodItem.Product,
       user_id: u_id,
       quantity: foodItem?.quantity ? foodItem?.quantity : 1,
+      add_on: addOnsList,
+      special_note: foodItem.specialNote,
     };
     console.log(foodItem.addOns);
-
     let res = await addProductToCart(data);
     console.log(res);
     if (res?.status == 200) {

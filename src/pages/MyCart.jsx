@@ -3,7 +3,8 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useAppContext } from "../Context";
 import { Link, useNavigate } from "react-router-dom";
-import { deleteCartList, getCartList } from "../services/User";
+import { createCheckout, deleteCartList, getCartList } from "../services/User";
+import axios from "axios";
 
 const MyCart = () => {
   const navigate = useNavigate();
@@ -42,7 +43,16 @@ const MyCart = () => {
     getCartItems();
   }, []);
   console.log(foodSummary);
-
+  const handleCheckout = async () => {
+    foodSummary.map(async (item) => {
+      let data = {
+        user_id: item.user_id,
+        order_id: item._id,
+      };
+      let res = await createCheckout(data);
+    });
+    navigate("/checkout");
+  };
   return (
     <div className="">
       <Header backgroundColor={"bg-gray-800 relative"} />
@@ -86,7 +96,7 @@ const MyCart = () => {
                         ).toFixed(2)}
                       </p>
                       <p className="text-gray-600 text-[0.9rem] font-medium mb-1">
-                        Special Note: {food.product_details?.[0].specialNote}
+                        Special Note: {food.special_note}
                       </p>{" "}
                     </div>
                   </div>
@@ -104,7 +114,7 @@ const MyCart = () => {
             {foodSummary && (
               <div className="w-[80%] flex justify-end ml-10 border-b">
                 <div>
-                  <p className="font-semibold mt-4">
+                  {/* <p className="font-semibold mt-4">
                     Total Amount: $
                     {(
                       foodSummary.reduce(
@@ -122,15 +132,15 @@ const MyCart = () => {
                         0
                       )
                     ).toFixed(2)}
-                  </p>
-                  {!msg && (
+                  </p> */}
+                  {/* {!msg && (
                     <button
                       className="bg-blue-800 my-5 text-white py-2 px-5 rounded-md"
                       onClick={handlePayment}
                     >
                       Checkout for Payment
                     </button>
-                  )}
+                  )} */}
                 </div>
                 {error && (
                   <p className="text-red-700 -mt-2 mb-4">
@@ -143,13 +153,12 @@ const MyCart = () => {
                     to continue
                   </p>
                 )}{" "}
-                {msg && (
-                  <Link to="/checkout">
-                    <button className="bg-green-700 text-white p-2 rounded-md mx-5">
-                      Proceeding to checkout
-                    </button>
-                  </Link>
-                )}
+                <button
+                  className="bg-green-700 text-white p-2 -mt-10 rounded-md mb-5 mx-5"
+                  onClick={handleCheckout}
+                >
+                  Proceeding to checkout
+                </button>
               </div>
             )}
           </>

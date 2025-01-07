@@ -8,66 +8,11 @@ import { DeleteConfirmationDialog } from "../../components/Admin/delete-confirma
 import { Sidebar } from "../../components/Admin/Sidebar";
 import { StatCard } from "../../components/Admin/Statscard";
 import { useLocation, useNavigate, Link } from "react-router-dom";
-
-const initialProducts = [
-  {
-    id: "1",
-    name: "Margherita Pizza",
-    description: "Classic pizza with tomato sauce and mozzarella",
-    price: 12.99,
-    category: "Pizza",
-  },
-  {
-    id: "2",
-    name: "Caesar Salad",
-    description: "Fresh romaine lettuce with Caesar dressing",
-    price: 8.99,
-    category: "Salad",
-  },
-];
-
-const ordersByDate = {
-  "2024-12-20": [
-    {
-      id: "o1",
-      product: "Margherita Pizza",
-      quantity: 2,
-      total: 25.98,
-      status: "Served",
-      orderType: "Dining",
-    },
-    {
-      id: "o2",
-      product: "Caesar Salad",
-      quantity: 1,
-      total: 8.99,
-      status: "Not Served",
-      orderType: "Takeaway",
-    },
-  ],
-  "2024-12-21": [
-    {
-      id: "o3",
-      product: "Caesar Salad",
-      quantity: 3,
-      total: 26.97,
-      status: "Served",
-      orderType: "Dining",
-    },
-    {
-      id: "o4",
-      product: "Margherita Pizza",
-      quantity: 1,
-      total: 12.99,
-      status: "Not Served",
-      orderType: "Takeaway",
-    },
-  ],
-};
+import axios from "axios";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
-  const [products, setProducts] = useState(initialProducts);
+  const [products, setProducts] = useState();
   const [selectedDate, setSelectedDate] = useState("2024-12-20");
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
@@ -101,19 +46,8 @@ export default function AdminDashboard() {
     setSelectedDate(newDate);
   };
 
-  // useEffect(() => {
-  //   let userData = JSON.parse(localStorage.getItem("admintoken"));
-  //   if (!userData) {
-  //     navigate("/admin/login");
-  //   }
-  // }, []);
-  // Filter orders and calculate stats whenever filters or orders change
   useEffect(() => {
-    // Get orders for the selected date
-    const ordersForDate = ordersByDate[selectedDate] || [];
-
-    // Apply filters to orders
-    const filtered = ordersForDate.filter((order) => {
+    const filtered = orders.filter((order) => {
       const matchesSearchTerm =
         order.product
           .toLowerCase()
@@ -150,10 +84,7 @@ export default function AdminDashboard() {
   }, [filters, selectedDate, orders, products]);
 
   // Initialize orders for the default date
-  useEffect(() => {
-    const ordersForDate = ordersByDate[selectedDate] || [];
-    setOrders(ordersForDate);
-  }, [selectedDate]);
+
   useEffect(() => {
     let admintoken = localStorage.getItem("admintoken");
     let userData;
@@ -170,6 +101,13 @@ export default function AdminDashboard() {
     if (!admintoken) {
       navigate("/admin/login");
     }
+    const getOrderListing = async () => {
+      let res = await axios(
+        "https://gyroserver.vercel.app/admin/v1/operation/get_orders_list"
+      );
+      setOrders(res.data.orders);
+    };
+    getOrderListing();
   }, []);
   const handleLogout = () => {
     console.log("ini");

@@ -23,12 +23,6 @@ export function Sidebar() {
         >
           <Users className="inline-block mr-2 w-5 h-5" /> Users
         </Link>
-        <Link
-          to="/admin/settings"
-          className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white"
-        >
-          <Settings className="inline-block mr-2 w-5 h-5" /> Settings
-        </Link>
       </nav>
     </div>
   );

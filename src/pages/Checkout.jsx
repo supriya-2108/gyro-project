@@ -100,7 +100,6 @@ export function OrderSummary({ items }) {
 export default function Checkout() {
   return (
     <div className="w-full overflow-x-hidden">
-      {/* <div className="w-full overflow-x-hidden"> */}
       <Header backgroundColor={"bg-gray-800 relative"} />
       <div className="w-[80%] mx-auto my-10">
         <h1 className="text-3xl font-bold mb-8">Checkout</h1>

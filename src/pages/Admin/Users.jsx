@@ -69,7 +69,7 @@ const AdminUsers = () => {
                       className="mr-4"
                     />
                     <h1 className="text-sm font-medium text-gray-900">
-                      Dashboard Panel
+                      User Panel
                     </h1>
                   </div>
                   <button

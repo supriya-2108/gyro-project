@@ -1,26 +1,54 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 function UserProfile() {
   const [isEditing, setIsEditing] = useState(false);
+  const [userId, setUserId] = useState();
   const [formData, setFormData] = useState({
-    name: "John Doe",
-    email: "john@example.com",
-    phone: "+1 (555) 123-4567",
-    address: "123 Main St, City, State 12345",
+    name: "",
+    email: "",
+    phone: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsEditing(false);
-    // Handle form submission
     console.log("Form submitted:", formData);
+    try {
+      let res = await axios.patch(
+        `https://gyroserver.vercel.app/user/v1/operation/update_user_profile/${userId}`,
+        {
+          name: formData.name,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (res.status == 200) {
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
   useEffect(() => {
-    let emailId = localStorage.getItem("useremail");
-    setFormData((prev) => ({
-      ...prev,
-      email: JSON.parse(emailId),
-    }));
+    let res = localStorage.getItem("token");
+    let id = JSON.parse(res);
+    setUserId(id);
+    const getUserInfo = async () => {
+      let res1 = await axios(
+        `https://gyroserver.vercel.app/user/v1/operation/get_user_profile/${id}`
+      );
+      if (res1.data.user) {
+        let user = res1.data.user;
+        setFormData({
+          email: user.email,
+          phone: user.number,
+        });
+      }
+    };
+    getUserInfo();
   }, []);
   return (
     <div className="border p-6 rounded-md shadow-md bg-white">
@@ -39,15 +67,16 @@ function UserProfile() {
       </div>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid gap-4 md:grid-cols-2">
-          {/* <div className="space-y-2">
+          <div className="space-y-2">
             <label
               htmlFor="name"
               className="block text-sm font-medium text-gray-700"
             >
-              Full Name
+              Name
             </label>
             <input
               id="name"
+              type="name"
               value={formData.name}
               disabled={!isEditing}
               onChange={(e) =>
@@ -55,7 +84,7 @@ function UserProfile() {
               }
               className="block w-full border rounded-md px-3 py-2 focus:ring focus:ring-blue-200 disabled:bg-gray-100"
             />
-          </div> */}
+          </div>
           <div className="space-y-2">
             <label
               htmlFor="email"
@@ -87,23 +116,6 @@ function UserProfile() {
               disabled={!isEditing}
               onChange={(e) =>
                 setFormData({ ...formData, phone: e.target.value })
-              }
-              className="block w-full border rounded-md px-3 py-2 focus:ring focus:ring-blue-200 disabled:bg-gray-100"
-            />
-          </div>
-          <div className="space-y-2">
-            <label
-              htmlFor="address"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Address
-            </label>
-            <input
-              id="address"
-              value={formData.address}
-              disabled={!isEditing}
-              onChange={(e) =>
-                setFormData({ ...formData, address: e.target.value })
               }
               className="block w-full border rounded-md px-3 py-2 focus:ring focus:ring-blue-200 disabled:bg-gray-100"
             />

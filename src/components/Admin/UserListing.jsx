@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { faker } from "@faker-js/faker";
+import axios from "axios";
 
 export function generateMockUsers(count) {
   return Array.from({ length: count }, () => ({
@@ -44,6 +45,15 @@ const AdminUsersPage = ({ setIsModalOpen, setSelectedUser, selectedUser }) => {
     currentPage * ITEMS_PER_PAGE
   );
 
+  useEffect(() => {
+    const fetchUserList = async () => {
+      let res = await axios(
+        "https://gyroserver.vercel.app/admin/v1/operation/get_orders_list"
+      );
+      console.log(res);
+    };
+    fetchUserList();
+  }, []);
   return (
     <div className="container mx-auto py-10">
       <h1 className="text-3xl font-bold mb-5">User Management</h1>
