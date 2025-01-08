@@ -50,19 +50,20 @@ export default function AdminDashboard() {
     const filtered = orders.filter((order) => {
       const matchesSearchTerm =
         order.product
-          .toLowerCase()
-          .includes(filters.searchTerm.toLowerCase()) ||
-        order.id.toLowerCase().includes(filters.searchTerm.toLowerCase());
+          ?.toLowerCase()
+          ?.includes(filters.searchTerm?.toLowerCase()) ||
+        order.id?.toLowerCase().includes(filters.searchTerm?.toLowerCase());
 
       const matchesStatus = filters.status
-        ? order.status.toLowerCase() === filters.status.toLowerCase()
+        ? order.status?.toLowerCase() === filters.status?.toLowerCase()
         : true;
       const matchesOrderType = filters.orderType
-        ? order.orderType.toLowerCase() === filters.orderType.toLowerCase()
+        ? order.orderType?.toLowerCase() === filters.orderType?.toLowerCase()
         : true;
 
       return matchesSearchTerm && matchesStatus && matchesOrderType;
     });
+    console.log(filtered);
 
     setFilteredOrders(filtered);
 
@@ -105,6 +106,8 @@ export default function AdminDashboard() {
       let res = await axios(
         "https://gyroserver.vercel.app/admin/v1/operation/get_orders_list"
       );
+      console.log(res.data.orders);
+
       setOrders(res.data.orders);
     };
     getOrderListing();
@@ -215,7 +218,7 @@ export default function AdminDashboard() {
                     value={`$${stats.totalValue.toFixed(2)}`}
                   />
                 </div>
-                <div className="mb-6 flex max-sm:grid max-sm:grid-cols-2 max-sm:space-x-2 gap-4">
+                {/* <div className="mb-6 flex max-sm:grid max-sm:grid-cols-2 max-sm:space-x-2 gap-4">
                   <input
                     type="text"
                     name="searchTerm"
@@ -244,7 +247,7 @@ export default function AdminDashboard() {
                     <option value="Dining">Dining</option>
                     <option value="Takeaway">Takeaway</option>
                   </select>
-                </div>
+                </div> */}
                 {/* Orders Table */}
                 <h3 className="text-2xl font-semibold text-gray-900 mb-4">
                   OrderList for {selectedDate}
@@ -256,24 +259,23 @@ export default function AdminDashboard() {
                       <tr className="bg-gray-200 text-gray-700 text-left">
                         <th className="px-4 py-2">Order ID</th>
                         <th className="px-4 py-2">Product</th>
-                        <th className="px-4 py-2">Quantity</th>
-                        <th className="px-4 py-2">Total</th>
-                        <th className="px-4 py-2">Status</th>
+                        <th className="px-4 py-2">Amount</th>
                         <th className="px-4 py-2">Order Type</th>
+                        <th className="px-4 py-2">Status</th>
+                        <th className="px-4 py-2">Payment Type</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {filteredOrders.length > 0 ? (
-                        filteredOrders.map((order) => (
+                      {orders.length > 0 ? (
+                        orders.map((order) => (
                           <tr key={order.id} className="border-t">
-                            <td className="px-4 py-2">{order.id}</td>
+                            <td className="px-4 py-2">{order.order_id}</td>
                             <td className="px-4 py-2">{order.product}</td>
                             <td className="px-4 py-2">{order.quantity}</td>
-                            <td className="px-4 py-2">
-                              ${order.total.toFixed(2)}
-                            </td>
+                            <td className="px-4 py-2">{order.quantity}</td>
+
                             <td className="px-4 py-2">{order.status}</td>
-                            <td className="px-4 py-2">{order.orderType}</td>
+                            <td className="px-4 py-2">{order.payment_mode}</td>
                           </tr>
                         ))
                       ) : (
