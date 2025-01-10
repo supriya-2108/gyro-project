@@ -48,6 +48,8 @@ const MyCart = () => {
       let data = {
         user_id: item.user_id,
         order_id: item._id,
+        payment_mode: "paypal",
+        payment_id: "123",
       };
       let res = await createCheckout(data);
     });
@@ -67,32 +69,34 @@ const MyCart = () => {
                 <div className="flex  max-sm:flex-col md:justify-between md:items-end mb-12 md:w-[80%]">
                   <div className=" w-[80%] rounded-md mx-auto md:w-[80%] flex  max-sm:flex-col md:gap-10 md:items-start md:justify-start md:ml-36">
                     <img
-                      src={food.product_details?.[0].image}
+                      src={food.product_details?.[0]?.image}
                       className="h-[10rem] object-cover rounded-md md:w-[20rem] md:h-[20rem]"
                     />
                     <div className=" mt-2 md:mt-10">
                       <h1 className="text-2xl md:text-4xl font-semibold">
-                        {food.product_details?.[0].name}
+                        {food.product_details?.[0]?.name}
                       </h1>
                       <p className="md:mt-4 mb-2 text-gray-700 font-medium max-sm:text-sm">
-                        Ingredients: {food.product_details?.[0].description}
+                        Ingredients: {food.product_details?.[0]?.description}
                       </p>
                       <p className="text-gray-600 text-[0.9rem] font-medium mt-4 mb-1">
-                        Price: ${food.product_details?.[0].price}
+                        Price: ${food.product_details?.[0]?.price}
                       </p>
                       <p className="text-gray-600 text-[0.9rem] font-medium mb-1">
                         Tax : $
-                        {(food.product_details?.[0].price * 0.08238).toFixed(2)}
+                        {(food.product_details?.[0]?.price * 0.08238).toFixed(
+                          2
+                        )}
                         %
                       </p>
                       <p className="text-gray-600 text-[0.9rem] font-medium mb-1">
-                        Add Ons: ${food.product_details?.[0].addOnPrice}
+                        Add Ons: ${food.product_details?.[0]?.addOnPrice}
                       </p>
                       <p className="text-gray-600 text-[0.9rem] font-medium mb-1">
                         Total : $
                         {(
-                          food.product_details?.[0].price +
-                          food.product_details?.[0].price * 0.08238
+                          food.product_details?.[0]?.price +
+                          food.product_details?.[0]?.price * 0.08238
                         ).toFixed(2)}
                       </p>
                       <p className="text-gray-600 text-[0.9rem] font-medium mb-1">
