@@ -53,10 +53,12 @@ function UserProfile() {
     };
     getUserInfo();
   }, []);
+
   return (
     <div className="border p-6 rounded-md shadow-md bg-white">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-semibold">Profile Information</h2>
+        <>S</>
         <button
           className={`px-4 py-2 rounded-md ${
             isEditing
