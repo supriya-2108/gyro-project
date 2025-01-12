@@ -31,7 +31,7 @@ export const addProduct = async (data) => {
 
 export const updateProduct = async (data, id) => {
   try {
-    const res = await axios.patch(
+    const res = await axios.put(
       `https://gyroserver.vercel.app/admin/v1/operation/update_product/${id}`,
       data,
       {

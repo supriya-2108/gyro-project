@@ -36,10 +36,10 @@ export function ProductsTable({
         <button
           onClick={() => toggleAvailability(product._id)}
           className={`btn btn-sm ${
-            product.isAvailable ? "btn-success" : "btn-danger"
+            product.isAvailable === "available" ? "btn-success" : "btn-danger"
           }`}
         >
-          {product.isAvailable ? "Available" : "Unavailable"}
+          {product.isAvailable === "available" ? "Available" : "Unavailable"}
         </button>
       ),
     },

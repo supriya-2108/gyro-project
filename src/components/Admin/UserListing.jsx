@@ -33,24 +33,25 @@ const AdminUsersPage = ({ setIsModalOpen, setSelectedUser, selectedUser }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredUsers = users.filter(
-    (user) =>
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // const filteredUsers = users.filter(
+  //   (user) =>
+  //     user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //     user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
 
-  const totalPages = Math.ceil(filteredUsers.length / ITEMS_PER_PAGE);
-  const paginatedUsers = filteredUsers.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  );
+  // const totalPages = Math.ceil(filteredUsers.length / ITEMS_PER_PAGE);
+  // const paginatedUsers = filteredUsers.slice(
+  //   (currentPage - 1) * ITEMS_PER_PAGE,
+  //   currentPage * ITEMS_PER_PAGE
+  // );
 
   useEffect(() => {
     const fetchUserList = async () => {
       let res = await axios(
-        "https://gyroserver.vercel.app/admin/v1/operation/get_orders_list"
+        "https://gyroserver.vercel.app/admin/v1/operation/get_all_users_list"
       );
       console.log(res);
+      setUsers(res.data.data);
     };
     fetchUserList();
   }, []);
@@ -69,12 +70,8 @@ const AdminUsersPage = ({ setIsModalOpen, setSelectedUser, selectedUser }) => {
         <table className="table-auto min-w-full border-collapse border border-gray-300">
           <thead>
             <tr>
-              <th className="border border-gray-300 px-4 py-2">Name</th>
               <th className="border border-gray-300 px-4 py-2">Email</th>
-              <th className="border border-gray-300 px-4 py-2">Orders</th>
-              <th className="border border-gray-300 px-4 py-2">
-                Preferred Payment
-              </th>
+              <th className="border border-gray-300 px-4 py-2">Number</th>
               <th
                 className="border border-gray-300 px-4 py-2"
                 onClick={() => setIsModalOpen(true)}
@@ -84,20 +81,15 @@ const AdminUsersPage = ({ setIsModalOpen, setSelectedUser, selectedUser }) => {
             </tr>
           </thead>
           <tbody>
-            {paginatedUsers.map((user) => (
+            {users.map((user) => (
               <tr key={user.id}>
-                <td className="border border-gray-300 px-4 py-2">
-                  {user.name}
-                </td>
                 <td className="border border-gray-300 px-4 py-2">
                   {user.email}
                 </td>
                 <td className="border border-gray-300 px-4 py-2">
-                  {user.orderHistory.length}
+                  {user.number}
                 </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {user.preferredPaymentMode}
-                </td>
+
                 <td className="border border-gray-300 px-4 py-2">
                   <button
                     className="bg-blue-500 text-white px-4 py-2 rounded-md"
@@ -117,8 +109,8 @@ const AdminUsersPage = ({ setIsModalOpen, setSelectedUser, selectedUser }) => {
       <div className="flex justify-between items-center mt-4">
         <div>
           Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1} to{" "}
-          {Math.min(currentPage * ITEMS_PER_PAGE, filteredUsers.length)} of{" "}
-          {filteredUsers.length} users
+          {Math.min(currentPage * ITEMS_PER_PAGE, users?.length)} of{" "}
+          {users.length} users
         </div>
         <div className="space-x-2">
           <button
@@ -130,9 +122,9 @@ const AdminUsersPage = ({ setIsModalOpen, setSelectedUser, selectedUser }) => {
           </button>
           <button
             onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              setCurrentPage((prev) => Math.min(prev + 1, users?.length))
             }
-            disabled={currentPage === totalPages}
+            disabled={currentPage === users.length}
             className="bg-gray-300 px-3 py-2 rounded-md"
           >
             Next

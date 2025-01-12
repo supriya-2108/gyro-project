@@ -26,7 +26,7 @@ export default function AdminLogin() {
     if (res?.status === 200) {
       console.log(res);
 
-      localStorage.setItem("admintoken", res.data.token);
+      localStorage.setItem("admintoken", res.data.user_info.user_id);
       navigate("/admin/dashboard");
     }
     console.log(res.status === 200);

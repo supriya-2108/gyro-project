@@ -15,10 +15,12 @@ function UserProfile() {
     setIsEditing(false);
     console.log("Form submitted:", formData);
     try {
-      let res = await axios.patch(
+      let res = await axios.put(
         `https://gyroserver.vercel.app/user/v1/operation/update_user_profile/${userId}`,
         {
           name: formData.name,
+          email: formData.email,
+          number: formData.phone,
         },
         {
           headers: {
@@ -44,6 +46,7 @@ function UserProfile() {
         let user = res1.data.user;
         setFormData({
           email: user.email,
+
           phone: user.number,
         });
       }

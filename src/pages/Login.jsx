@@ -28,11 +28,12 @@ export default function Login() {
     let res = await loginUser(formData);
     if (res?.status === 200) {
       console.log(res);
-      localStorage.setItem("token", JSON.stringify(res.data.token));
+      localStorage.setItem("token", JSON.stringify(res.data.user_info.user_id));
       localStorage.setItem(
         "useremail",
         JSON.stringify(res.data.user_info.user_email)
       );
+      console.log(res.data);
       navigate("/");
     }
     if (res?.status !== 200) {

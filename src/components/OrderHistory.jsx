@@ -39,7 +39,7 @@ function OrderHistory() {
                 Status
               </th>
               <th className="px-4 py-2 text-left font-medium text-gray-700">
-                Action
+                Payment Mode
               </th>
             </tr>
           </thead>
@@ -47,25 +47,23 @@ function OrderHistory() {
             {orderList.length > 0 ? (
               orderList.map((order) => (
                 <tr key={order.id} className="border-t">
-                  <td className="px-4 py-2">{order.id}</td>
+                  <td className="px-4 py-2">{order.order_id}</td>
                   <td className="px-4 py-2">
-                    {new Date(order.date).toLocaleDateString()}
+                    {new Date(order.createdAt).toLocaleDateString()}
                   </td>
                   <td className="px-4 py-2">
-                    <div className="max-w-xs truncate">
-                      {order.items.join(", ")}
-                    </div>
+                    <div className="max-w-xs truncate">{order.item_name}</div>
                   </td>
-                  <td className="px-4 py-2">${order.total.toFixed(2)}</td>
+                  <td className="px-4 py-2">${order.amount.toFixed(2)}</td>
                   <td className="px-4 py-2">
                     <span className="inline-block px-2 py-1 text-sm font-medium text-white bg-green-500 rounded-md">
                       {order.status}
                     </span>
                   </td>
                   <td className="px-4 py-2">
-                    <button className="px-3 py-1 text-sm border rounded-md hover:bg-gray-50">
-                      View Details
-                    </button>
+                    <span className="inline-block px-2 py-1 text-sm font-medium">
+                      {order.payment_mode}
+                    </span>
                   </td>
                 </tr>
               ))

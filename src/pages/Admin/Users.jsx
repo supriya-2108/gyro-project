@@ -155,45 +155,9 @@ const AdminUsers = () => {
 
           {selectedUser && (
             <div className="mt-4 border p-4 rounded-md bg-gray-100">
-              <h2 className="text-lg font-semibold">{selectedUser.name}</h2>
               <p>
                 <strong>Email:</strong> {selectedUser.email}
               </p>
-              <p>
-                <strong>Preferred Payment:</strong>{" "}
-                {selectedUser.preferredPaymentMode}
-              </p>
-              <p>
-                <strong>Feedback:</strong>{" "}
-                {selectedUser.feedback || "No feedback provided"}
-              </p>
-              <h3 className="text-md font-semibold mt-2">Order History</h3>
-              <table className="table-auto w-full border-collapse border border-gray-300 mt-2">
-                <thead>
-                  <tr>
-                    <th className="border border-gray-300 px-4 py-2">
-                      Order ID
-                    </th>
-                    <th className="border border-gray-300 px-4 py-2">Date</th>
-                    <th className="border border-gray-300 px-4 py-2">Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {selectedUser.orderHistory.map((order) => (
-                    <tr key={order.id}>
-                      <td className="border border-gray-300 px-4 py-2">
-                        {order.id}
-                      </td>
-                      <td className="border border-gray-300 px-4 py-2">
-                        {new Date(order.date).toLocaleDateString()}
-                      </td>
-                      <td className="border border-gray-300 px-4 py-2">
-                        ${order.amount.toFixed(2)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
             </div>
           )}
           <button

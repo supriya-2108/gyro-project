@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import HeroSection from "../components/HeroSection";
 import { Images } from "../constants/Images";
 import Header from "../components/Header";
+import axios from "axios";
 export const mockCartItems = [
   { id: "1", name: "Wireless Earbuds", price: 79.99, quantity: 1 },
   { id: "2", name: "Smartphone Case", price: 19.99, quantity: 2 },
@@ -66,23 +67,35 @@ export function CheckoutForm({ items }) {
 
 // OrderSummary Component
 export function OrderSummary({ items }) {
-  const total = items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+  const [orderList, setOrderList] = useState([]);
+  const [total, setTotal] = useState(0);
+  useEffect(() => {
+    const data = async () => {
+      const response = await axios(
+        "https://gyroserver.vercel.app/user/v1/operation/get_order_list?user_id=676b01ba33b36b339b6f6a33&&status=pending"
+      );
+
+      const total = response.data.orders.reduce(
+        (sum, item) => sum + item.amount,
+        0
+      );
+      setTotal(total);
+      console.log(response.data.orders);
+      setOrderList(response.data.orders);
+    };
+    data();
+  }, []);
 
   return (
     <div className="bg-white shadow-md rounded-lg p-6">
       <ul className="divide-y divide-gray-200">
-        {items.map((item) => (
+        {orderList.map((item) => (
           <li key={item.id} className="py-4 flex justify-between">
             <div>
-              <p className="font-medium">{item.name}</p>
+              <p className="font-medium">{item.item_name}</p>
               <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
             </div>
-            <p className="font-medium">
-              ${(item.price * item.quantity).toFixed(2)}
-            </p>
+            <p className="font-medium">${item.amount.toFixed(2)}</p>
           </li>
         ))}
       </ul>

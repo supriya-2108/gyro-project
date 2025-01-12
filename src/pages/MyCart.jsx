@@ -12,6 +12,8 @@ const MyCart = () => {
   const [error, setError] = useState(false);
   const [msg, setMsg] = useState(false);
   const { user } = useAppContext();
+  const [totalData, setTotalData] = useState([]);
+  const [addOnTotal, setaddOnTotal] = useState([]);
   const handlePayment = () => {
     if (!localStorage.getItem("token")) {
       setError(true);
@@ -28,9 +30,15 @@ const MyCart = () => {
     let u_id = userData;
 
     let res = await getCartList({ user_id: u_id });
-    console.log(res);
-    if (res?.status == 200) {
+    console.log(res.data);
+    if (res?.status === 200) {
       setFoodSummary(res.data.cart);
+
+      let addOnTotals = res.data.cart?.map((item) => {
+        return item.add_ons?.reduce((acc, addOn) => acc + addOn.price, 0) || 0;
+      });
+      console.log(addOnTotals);
+      setaddOnTotal(addOnTotals);
     }
   };
   const handledeleteItem = async (id) => {
@@ -44,15 +52,26 @@ const MyCart = () => {
   }, []);
   console.log(foodSummary);
   const handleCheckout = async () => {
+    let totalData = [];
     foodSummary.map(async (item) => {
+      console.log(item);
       let data = {
         user_id: item.user_id,
         order_id: item._id,
         payment_mode: "paypal",
         payment_id: "123",
+        is_applied_promo_code: false,
+        promo_discount: 0,
+        status: item?.status,
+        amount: item?.product_details[0]?.price,
+        item_name: item?.product_details[0]?.name,
       };
-      let res = await createCheckout(data);
+      totalData.push(data);
     });
+    let finalData = {
+      checkout_data: totalData,
+    };
+    let res = await createCheckout(finalData);
     navigate("/checkout");
   };
   return (
@@ -65,7 +84,7 @@ const MyCart = () => {
         foodSummary?.length > 0 ? (
           <>
             {foodSummary &&
-              foodSummary?.map((food) => (
+              foodSummary?.map((food, index) => (
                 <div className="flex  max-sm:flex-col md:justify-between md:items-end mb-12 md:w-[80%]">
                   <div className=" w-[80%] rounded-md mx-auto md:w-[80%] flex  max-sm:flex-col md:gap-10 md:items-start md:justify-start md:ml-36">
                     <img
@@ -89,8 +108,18 @@ const MyCart = () => {
                         )}
                         %
                       </p>
+                      <span className="text-gray-600 text-[0.9rem] font-medium mt-4 mb-1">
+                        Add Ons:
+                      </span>
+                      <div className="mb-3">
+                        {food?.add_ons?.map((item) => (
+                          <p className="text-gray-600 text-[0.7rem] font-medium mb-1">
+                            {item.title}
+                          </p>
+                        ))}
+                      </div>
                       <p className="text-gray-600 text-[0.9rem] font-medium mb-1">
-                        Add Ons: ${food.product_details?.[0]?.addOnPrice}
+                        AddOns Total : ${addOnTotal?.[index]}
                       </p>
                       <p className="text-gray-600 text-[0.9rem] font-medium mb-1">
                         Total : $

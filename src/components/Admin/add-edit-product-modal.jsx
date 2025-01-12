@@ -16,7 +16,7 @@ export function AddEditProductModal({
       description: "",
       price: 0,
       category: "",
-      availability: true,
+      isAvailable: true,
       imageUrl: "",
     }
   );
@@ -38,7 +38,8 @@ export function AddEditProductModal({
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]:
+        type === "checkbox" ? (checked ? "available" : "unavailable") : value,
     }));
   };
   const handleSubmit = (e) => {
@@ -54,7 +55,7 @@ export function AddEditProductModal({
         description: product.description,
         price: product.price,
         category: product.category,
-        availability: product.isAvailable,
+        isAvailable: product.isAvailable,
         imageUrl: product.image,
       });
     }
@@ -137,11 +138,11 @@ export function AddEditProductModal({
                   Item Availability
                 </label>
                 <input
-                  id="availability"
-                  name="availability"
+                  id="isAvailable"
+                  name="isAvailable"
                   type="checkbox"
                   className="h-4 w-4 absolute -left-[10rem]"
-                  checked={formData.availability}
+                  checked={formData.isAvailable === "available"}
                   onChange={handleInputChange}
                 />
               </div>

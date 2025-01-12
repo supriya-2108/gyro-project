@@ -270,9 +270,9 @@ export default function AdminDashboard() {
                         orders.map((order) => (
                           <tr key={order.id} className="border-t">
                             <td className="px-4 py-2">{order.order_id}</td>
-                            <td className="px-4 py-2">{order.product}</td>
-                            <td className="px-4 py-2">{order.quantity}</td>
-                            <td className="px-4 py-2">{order.quantity}</td>
+                            <td className="px-4 py-2">{order.item_name}</td>
+                            <td className="px-4 py-2">{order.amount}</td>
+                            <td className="px-4 py-2">{order.order_type}</td>
 
                             <td className="px-4 py-2">{order.status}</td>
                             <td className="px-4 py-2">{order.payment_mode}</td>
