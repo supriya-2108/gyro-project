@@ -30,12 +30,17 @@ const MyCart = () => {
     let u_id = userData;
 
     let res = await getCartList({ user_id: u_id });
-    console.log(res.data);
     if (res?.status === 200) {
       setFoodSummary(res.data.cart);
 
       let addOnTotals = res.data.cart?.map((item) => {
-        return item.add_ons?.reduce((acc, addOn) => acc + addOn.price, 0) || 0;
+        console.log(item.add_ons);
+        return (
+          item.add_ons?.reduce(
+            (acc, addOn) => acc + parseInt(addOn.price, 10), // Ensure parsing to integer
+            0
+          ) || 0
+        );
       });
       console.log(addOnTotals);
       setaddOnTotal(addOnTotals);
@@ -125,7 +130,8 @@ const MyCart = () => {
                         Total : $
                         {(
                           food.product_details?.[0]?.price +
-                          food.product_details?.[0]?.price * 0.08238
+                          food.product_details?.[0]?.price * 0.08238 +
+                          parseInt(addOnTotal?.[index], 10)
                         ).toFixed(2)}
                       </p>
                       <p className="text-gray-600 text-[0.9rem] font-medium mb-1">
