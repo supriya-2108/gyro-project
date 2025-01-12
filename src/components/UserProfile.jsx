@@ -46,7 +46,7 @@ function UserProfile() {
         let user = res1.data.user;
         setFormData({
           email: user.email,
-
+          name: user.name,
           phone: user.number,
         });
       }
