@@ -70,7 +70,7 @@ function ReviewSection() {
         <h2 className="text-4xl font-bold text-gray-800 mb-4">
           WHAT OTHERS ARE SAYING...
         </h2>
-        <Link to="https://www.yelp.com/biz/gyro-gyro-hartsdale">
+        <Link to="https://g.co/kgs/Yn1V9TX" target="_blank">
           <p className="text-red-600 font-semibold">SEE REVIEWS FROM GOOGLE</p>
         </Link>
       </div>

@@ -13,57 +13,135 @@ export const mockCartItems = [
 // CheckoutForm Component
 
 export function CheckoutForm({ items }) {
-  const [paymentComplete, setPaymentComplete] = useState(false);
-  const total = items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+  const [cardNumber, setCardNumber] = useState("");
+  const [expirationDate, setExpirationDate] = useState("");
+  const [cvv, setCvv] = useState("");
+  const [amount, setAmount] = useState("");
 
-  const handlePaymentSuccess = (details) => {
-    console.log("Payment completed successfully:", details);
-    setPaymentComplete(true);
+  const handlePayment = () => {
+    console.log('submit');
+    
+    const authData = {
+      clientKey: "your_client_key", // Replace with your credentials
+      apiLoginID: "your_api_login_id", // Replace with your credentials
+    };
+
+    const cardData = {
+      cardNumber,
+      month: expirationDate.split("/")[0],
+      year: expirationDate.split("/")[1],
+      cardCode: cvv,
+    };
+
+    const secureData = {
+      authData,
+      cardData,
+    };
+
+    window.Accept.dispatchData(secureData, (response) => {
+      if (response.messages.resultCode === "Ok") {
+        // Send token to backend
+        console.log('123');
+        axios
+          .post("https://localhost:5000/process-payment", {
+            amount,
+            opaqueData: response.opaqueData,
+          })
+          .then((res) => {
+            alert(
+              `Payment successful! Transaction ID: ${res.data.transactionId}`
+            );
+          })
+          .catch((err) => {
+            console.error(err);
+            alert("Payment failed.");
+          });
+      } else {
+        alert("Error: " + response.messages.message[0].text);
+      }
+    });
   };
+  useEffect(() => {
+    if (!window.Accept) {
+      console.error("Authorize.Net Accept.js not loaded");
+    }
+  }, []);
+ return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+      <div className="bg-white shadow-lg rounded-lg p-6 max-w-md w-full">
+        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">Payment Form</h1>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handlePayment();
+          }}
+          className="space-y-4"
+        >
+          {/* Card Number */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Card Number</label>
+            <input
+              type="text"
+              value={cardNumber}
+              onChange={(e) => setCardNumber(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter card number"
+              required
+            />
+          </div>
 
-  return (
-    <div className="bg-white shadow-md rounded-lg p-6">
-      {paymentComplete ? (
-        <div className="text-center">
-          <h3 className="text-2xl font-semibold text-green-600 mb-4">
-            Payment Successful!
-          </h3>
-          <p>Thank you for your purchase. Your order has been processed.</p>
-        </div>
-      ) : (
-        <PayPalScriptProvider options={{ "client-id": "test" }}>
-          <PayPalButtons
-            createOrder={(data, actions) => {
-              return actions.order.create({
-                purchase_units: [
-                  {
-                    amount: {
-                      value: total.toFixed(2),
-                    },
-                  },
-                ],
-              });
-            }}
-            onApprove={(data, actions) => {
-              if (actions.order) {
-                return actions.order.capture().then(handlePaymentSuccess);
-              } else {
-                console.error(
-                  "Order capture failed: actions.order is undefined."
-                );
-                return Promise.reject("Order capture failed.");
-              }
-            }}
-            style={{ layout: "vertical" }}
-          />
-        </PayPalScriptProvider>
-      )}
+          {/* Expiration Date */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Expiration Date (MM/YYYY)</label>
+            <input
+              type="text"
+              value={expirationDate}
+              onChange={(e) => setExpirationDate(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="MM/YYYY"
+              required
+            />
+          </div>
+
+          {/* CVV */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">CVV</label>
+            <input
+              type="text"
+              value={cvv}
+              onChange={(e) => setCvv(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter CVV"
+              required
+            />
+          </div>
+
+          {/* Amount */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Amount</label>
+            <input
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter amount"
+              required
+            />
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
+          >
+            Pay Now
+          </button>
+        </form>
+      </div>
     </div>
   );
-}
+};
+
 
 // OrderSummary Component
 export function OrderSummary({ items }) {
