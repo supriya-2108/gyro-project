@@ -21,16 +21,17 @@ export default function OurMenu({ type }) {
   const [activeTitle, setActiveTitles] = useState([]);
   const [activeTab, setActiveTab] = useState(categories[0] || "");
   const [foodItem, setFoodItem] = useState({
-    title: "",
-    image: "",
+    name: "",
+    link: "",
     description: "",
     price: 0,
     specialNote: "",
     addOns: [],
     addOnPrice: 0,
+    isAvailable:"",
     quantity: 1, // Add a default quantity here
   });
-
+  
   const handleQuantityChange = (e) => {
     console.log(e.target.value);
 
@@ -201,7 +202,9 @@ export default function OurMenu({ type }) {
       <div className="grid lg:grid-cols-2 md:w-[85%] mx-auto gap-y-4">
         {foodItems ? (
           foodItems.length > 0 &&
-          foodItems?.map((item, index) => (
+          foodItems?.map((item, index) =>{
+            item.isAvailable=="available"?
+            (
             <div
               key={index}
               className={`flex max-sm:flex-col cursor-pointer rounded-md items-center bg-white w-[100%] h-[22rem] md:h-[15rem] shadow-xl ${
@@ -248,7 +251,7 @@ export default function OurMenu({ type }) {
                 </span>
               </div>
             </div>
-          ))
+          ):"")
         ) : (
           <p>Loading...</p>
         )}
