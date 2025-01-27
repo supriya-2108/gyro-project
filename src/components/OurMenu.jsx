@@ -22,7 +22,7 @@ export default function OurMenu({ type }) {
   const [activeTab, setActiveTab] = useState(categories[0] || "");
   const [foodItem, setFoodItem] = useState({
     name: "",
-    link: "",
+    image: "",
     description: "",
     price: 0,
     specialNote: "",
