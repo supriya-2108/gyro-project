@@ -275,7 +275,7 @@ export default function OurMenu({ type }) {
                     </span>
                   </div>
                 </div>
-              ) : ""
+              ) : <></>
           })
         ) : (
           <p>Loading...</p>
