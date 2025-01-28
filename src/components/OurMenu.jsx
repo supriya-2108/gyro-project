@@ -228,56 +228,55 @@ export default function OurMenu({ type }) {
       <div className="grid lg:grid-cols-2 md:w-[85%] mx-auto gap-y-4">
         {foodItems ? (
           foodItems.length > 0 &&
-          foodItems?.map((item, index) =>{
-            item.isAvailable=="available"?
-            (
-            <div
-              key={index}
-              className={`flex max-sm:flex-col cursor-pointer rounded-md items-center bg-white w-[100%] h-[22rem] md:h-[15rem] shadow-xl ${
-                activeTitle.includes(item.name)
-                  ? "border border-[#3d3b3a] !shadow-2xl bg-[#c8a97e]"
-                  : ""
-              } ${
-                Math.floor(index / 2) % 2 === 0
-                  ? "flex-row"
-                  : "flex-row-reverse"
-              }`} // Alternate layout for rows
-              data-aos={
-                !activeTitle.includes(item.name)
-                  ? index % 2 === 0
-                    ? "fade-right"
-                    : "fade-left"
-                  : ""
-              } // Skip animation for active items
-            >
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-[100%] md:w-[35%] h-[10rem] md:h-full object-cover"
-              />
-              <div className="flex px-6 gap-5 py-3">
-                <div className="flex flex-col gap-2 justify-between items-start ">
-                  <h3 className="font-bold text-lg md:text-xl text-gray-800">
-                    {item.name}
-                  </h3>{" "}
-                  <p className="text-muted-foreground text-[0.7rem] md:text-md mt-1">
-                    {item?.description}
-                  </p>
-                  <button
-                    className="bg-[#3d3b3a]  text-white px-3 py-2"
-                    onClick={() => {
-                      openModal(item);
-                    }}
-                  >
-                    Order now{" "}
-                  </button>
+          foodItems?.map((item, index) => {
+            item.isAvailable == "available" ?
+              (
+                <div
+                  key={index}
+                  className={`flex max-sm:flex-col cursor-pointer rounded-md items-center bg-white w-[100%] h-[22rem] md:h-[15rem] shadow-xl ${activeTitle.includes(item.name)
+                      ? "border border-[#3d3b3a] !shadow-2xl bg-[#c8a97e]"
+                      : ""
+                    } ${Math.floor(index / 2) % 2 === 0
+                      ? "flex-row"
+                      : "flex-row-reverse"
+                    }`} // Alternate layout for rows
+                  data-aos={
+                    !activeTitle.includes(item.name)
+                      ? index % 2 === 0
+                        ? "fade-right"
+                        : "fade-left"
+                      : ""
+                  } // Skip animation for active items
+                >
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-[100%] md:w-[35%] h-[10rem] md:h-full object-cover"
+                  />
+                  <div className="flex px-6 gap-5 py-3">
+                    <div className="flex flex-col gap-2 justify-between items-start ">
+                      <h3 className="font-bold text-lg md:text-xl text-gray-800">
+                        {item.name}
+                      </h3>{" "}
+                      <p className="text-muted-foreground text-[0.7rem] md:text-md mt-1">
+                        {item?.description}
+                      </p>
+                      <button
+                        className="bg-[#3d3b3a]  text-white px-3 py-2"
+                        onClick={() => {
+                          openModal(item);
+                        }}
+                      >
+                        Order now{" "}
+                      </button>
+                    </div>
+                    <span className="text-2xl font-semibold text-[#009dc4]">
+                      ${item.price}
+                    </span>
+                  </div>
                 </div>
-                <span className="text-2xl font-semibold text-[#009dc4]">
-                  ${item.price}
-                </span>
-              </div>
-            </div>
-          ):"")
+              ) : ""
+          })
         ) : (
           <p>Loading...</p>
         )}
