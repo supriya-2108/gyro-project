@@ -4,6 +4,7 @@ import HeroSection from "../components/HeroSection";
 import { Images } from "../constants/Images";
 import Header from "../components/Header";
 import axios from "axios";
+import { g } from "framer-motion/client";
 export const mockCartItems = [
   { id: "1", name: "Wireless Earbuds", price: 79.99, quantity: 1 },
   { id: "2", name: "Smartphone Case", price: 19.99, quantity: 2 },
@@ -19,11 +20,12 @@ export function CheckoutForm({ items }) {
   const [amount, setAmount] = useState("");
 
   const handlePayment = () => {
-    console.log('submit');
-    
+    console.log("submit");
+
     const authData = {
-      clientKey: "your_client_key", // Replace with your credentials
-      apiLoginID: "your_api_login_id", // Replace with your credentials
+      clientKey:
+        "3345hQVM64pFt82LVH3ZzBBbAjqT2Y42Ss3untD58Lv7xhRtK2y5Uhq3abKxnPp2", // Replace with your credentials
+      apiLoginID: "866ePLb6vB", // Replace with your credentials
     };
 
     const cardData = {
@@ -41,7 +43,7 @@ export function CheckoutForm({ items }) {
     window.Accept.dispatchData(secureData, (response) => {
       if (response.messages.resultCode === "Ok") {
         // Send token to backend
-        console.log('123');
+        console.log("123");
         axios
           .post("https://localhost:5000/process-payment", {
             amount,
@@ -62,14 +64,28 @@ export function CheckoutForm({ items }) {
     });
   };
   useEffect(() => {
+    const getData = async () => {
+      const response = await axios(
+        "https://gyroserver.vercel.app/user/v1/operation/get_order_list?user_id=676b01ba33b36b339b6f6a33&&status=pending"
+      );
+      const total = response.data.orders.reduce(
+        (sum, item) => sum + item.amount,
+        0
+      );
+      setAmount(total);
+    };
     if (!window.Accept) {
       console.error("Authorize.Net Accept.js not loaded");
     }
+
+    getData();
   }, []);
- return (
+  return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <div className="bg-white shadow-lg rounded-lg p-6 max-w-md w-full">
-        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">Payment Form</h1>
+        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
+          Payment Form
+        </h1>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -79,7 +95,9 @@ export function CheckoutForm({ items }) {
         >
           {/* Card Number */}
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Card Number</label>
+            <label className="block text-gray-700 font-medium mb-2">
+              Card Number
+            </label>
             <input
               type="text"
               value={cardNumber}
@@ -92,7 +110,9 @@ export function CheckoutForm({ items }) {
 
           {/* Expiration Date */}
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Expiration Date (MM/YYYY)</label>
+            <label className="block text-gray-700 font-medium mb-2">
+              Expiration Date (MM/YYYY)
+            </label>
             <input
               type="text"
               value={expirationDate}
@@ -118,7 +138,9 @@ export function CheckoutForm({ items }) {
 
           {/* Amount */}
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Amount</label>
+            <label className="block text-gray-700 font-medium mb-2">
+              Amount
+            </label>
             <input
               type="number"
               value={amount}
@@ -140,8 +162,7 @@ export function CheckoutForm({ items }) {
       </div>
     </div>
   );
-};
-
+}
 
 // OrderSummary Component
 export function OrderSummary({ items }) {

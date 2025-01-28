@@ -7,12 +7,7 @@ import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 const Menu = () => {
   const navigate = useNavigate();
-  useEffect(() => {
-    let userData = JSON.parse(localStorage.getItem("token"));
-    if (!userData) {
-      navigate("/login");
-    }
-  }, []);
+
   return (
     <div>
       {" "}

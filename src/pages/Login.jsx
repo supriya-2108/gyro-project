@@ -34,20 +34,21 @@ export default function Login() {
         JSON.stringify(res.data.user_info.user_email)
       );
       console.log(res.data);
-      navigate("/");
+      const redirectPath = localStorage.getItem("redirectAfterLogin");
+      if (redirectPath) {
+        navigate(redirectPath);
+        localStorage.removeItem("redirectAfterLogin");
+      } else {
+        navigate("/");
+      }
     }
     if (res?.status !== 200) {
       setError("Invalid password or email");
       console.log(res);
     }
   };
+  console.log("imnside");
 
-  useEffect(() => {
-    let token = localStorage.getItem("token");
-    if (token) {
-      navigate("/");
-    }
-  }, []);
   return (
     <>
       {" "}

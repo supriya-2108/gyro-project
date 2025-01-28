@@ -6,7 +6,7 @@ import { X } from "lucide-react";
 import { Utensils, Candy, Wine } from "lucide-react";
 import CustomModal from "./CustomModal";
 import { Link, useNavigate } from "react-router-dom";
-import { addOns, foodItem } from "../constants/MenuItem";
+import { addOns } from "../constants/MenuItem";
 import { addProductToCart, getProductListForUser } from "../services/User";
 
 export default function OurMenu({ type }) {
@@ -15,7 +15,14 @@ export default function OurMenu({ type }) {
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([
+    "GYROS",
+    "BOWLS",
+    "SPECIALS",
+    "PITA PIZZAS ",
+    "SALADS",
+    "APPETIZERS",
+  ]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // To toggle dropdown visibility
   const [addOnsList, setAddOnsList] = useState([]);
   const [activeTitle, setActiveTitles] = useState([]);
@@ -46,16 +53,30 @@ export default function OurMenu({ type }) {
     if (res?.status == 200) {
       setFoodItems(res?.data?.products);
       setAllItems(res?.data?.products);
-      const uniqueCategories = [
-        ...new Set(res?.data?.products?.map((item) => item.category)),
-      ];
-      setCategories(uniqueCategories);
+      // const uniqueCategories = [
+      //   ...new Set(res?.data?.products?.map((item) => item.category)),
+      // ];
+      // setCategories(uniqueCategories);
     }
   };
   useEffect(() => {
     getFoodList();
     AOS.init();
     AOS.refresh();
+    const pendingProduct = localStorage.getItem("pendingProduct");
+    const modalState = localStorage.getItem("modalOpen");
+    const addOnList = localStorage.getItem("addOnList");
+    if (pendingProduct && pendingProduct !== "undefined") {
+      setFoodItem(JSON.parse(pendingProduct)); // Restore item
+      setAddOnsList(JSON.parse(addOnList));
+      localStorage.removeItem("addOnList");
+      localStorage.removeItem("pendingProduct");
+    }
+
+    if (modalState === "true") {
+      setIsModalOpen(true); // Reopen modal
+      localStorage.removeItem("modalOpen");
+    }
   }, []);
 
   const openModal = (item) => {
@@ -81,7 +102,6 @@ export default function OurMenu({ type }) {
       addOnPrice: prev.addOnPrice + item.price,
     }));
   };
-  console.log(foodItem.addOns);
 
   const handleCategoryChange = (category) => {
     const trimmedCategory = category.trim().toLowerCase(); // Trim and convert to lowercase
@@ -94,8 +114,14 @@ export default function OurMenu({ type }) {
   };
   const handleSubmit = async () => {
     let userData = JSON.parse(localStorage.getItem("token"));
+    if (!userData) {
+      localStorage.setItem("pendingProduct", JSON.stringify(foodItem));
+      localStorage.setItem("redirectAfterLogin", window.location.pathname);
+      localStorage.setItem("addOnList", JSON.stringify(addOnsList));
+      localStorage.setItem("modalOpen", "true");
+      window.location.href = "/login";
+    }
     let u_id = userData;
-    console.log(foodItem?.quantity);
 
     let data = {
       product_id: foodItem.Product,

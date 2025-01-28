@@ -9,12 +9,7 @@ import ReviewSection from "../components/review-section";
 import Map from "../components/Map";
 const Home = () => {
   const navigate = useNavigate();
-  useEffect(() => {
-    let userData = JSON.parse(localStorage.getItem("token"));
-    if (!userData) {
-      navigate("/login");
-    }
-  }, []);
+  
   return (
     <div className="w-full overflow-x-hidden">
       <HeroSection Images={Images} height={"100vh"} innerHeight="100vh" />{" "}
