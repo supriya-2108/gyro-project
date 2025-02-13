@@ -18,6 +18,16 @@ export default function Detail() {
             Catering Services
           </span>
         </h2>
+        <div>
+          <a
+            href="https://wa.me/919876543210"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#009dc4] text-sm cursor-pointer my-1"
+          >
+            Connect with client
+          </a>
+        </div>
       </div>
 
       <div className="grid md:grid-cols-3 gap-8 text-center">

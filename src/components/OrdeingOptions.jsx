@@ -42,6 +42,7 @@ export function OrderingOptions() {
                 to={option.href}
                 className={`flex flex-col items-center rounded-2xl p-4 text-center shadow-lg 
                   ${option.color} hover:shadow-xl transition-all duration-300`}
+                onClick={() => localStorage.setItem("mode", option.title)}
               >
                 <div className="flex h-10 w-10 md:h-16 md:w-16 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm">
                   <option.icon className=" md:h-8 md:w-8 text-white" />

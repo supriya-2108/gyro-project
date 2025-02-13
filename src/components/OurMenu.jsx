@@ -154,9 +154,20 @@ export default function OurMenu({ type }) {
       s
     >
       {type && (
-        <p className="text-center text-2xl font-bold mt-16">
-          You've choosen {localStorage.getItem("mode")?.toUpperCase()}
-        </p>
+        <>
+          <p className="text-center text-2xl font-bold mt-16">
+            You've choosen {localStorage.getItem("mode")?.toUpperCase()}
+          </p>
+          {localStorage.getItem("mode")?.toUpperCase() == "DINE-IN" && (
+            <div className="flex justify-center gap-3 items-center my-2">
+              <p>Enter no. of people</p>
+              <input className="border h-7 p-2 rounded-md" placeholder="0" />
+              <button className="bg-[#009dc4] text-white p-1 cursor-pointer rounded-md">
+                Send
+              </button>
+            </div>
+          )}
+        </>
       )}
       {!type && (
         <div className="text-center mt-8">
